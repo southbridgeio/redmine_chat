@@ -1,3 +1,0 @@
-= redmine_chat
-
-Description goes here
