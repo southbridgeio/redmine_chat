@@ -1,4 +1,5 @@
 <div class="chat-message">
-  <strong><%= format_time chat_message.created_at %> <%= chat_message.user.name %>:</strong><br>
+  <div class="time"><%= format_time chat_message.created_at %></div>
+  <strong><%= chat_message.user.name %></strong><br>
   <%= chat_message.message %>
 </div>

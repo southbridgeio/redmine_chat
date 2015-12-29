@@ -1,1 +1,3 @@
-<h2>ChatMessagesController#create</h2>
+$(".chat-messages").append("<%= escape_javascript render(@chat_message) %>");
+$(".chat-messages").animate({ scrollTop: 9999999999 }, "slow");
+$("#chat_message_message").val('');

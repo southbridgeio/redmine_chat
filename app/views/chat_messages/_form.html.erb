@@ -1,11 +1,8 @@
-<%= form_for(ChatMessage.new) do |f| %>
+<%= form_for(ChatMessage.new, remote: true) do |f| %>
 
   <%= f.hidden_field :issue_id, value: @issue.id %>
   <%= f.hidden_field :user_id, value: User.current.id %>
   <div class="field">
     <%= f.text_field :message %>
-  </div>
-  <div class="actions">
-    <%#= f.submit %>
   </div>
 <% end %>
