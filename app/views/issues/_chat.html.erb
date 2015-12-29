@@ -1,0 +1,14 @@
+<% if @issue.present? and @project.module_enabled?(:chat) %>
+  <div id="chat">
+    <div class="chat-messages">
+      <%= render @issue.chat_messages %>
+    </div>
+    <%= render 'chat_messages/form' %>
+  </div>
+
+  <% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'chat', plugin: 'redmine_chat' %>
+    <%= javascript_include_tag 'chat', plugin: 'redmine_chat' %>
+  <% end %>
+
+<% end %>

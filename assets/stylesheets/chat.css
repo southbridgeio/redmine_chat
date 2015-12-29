@@ -1,0 +1,23 @@
+#chat {
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+
+    width: 22%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #999;
+}
+
+#chat .chat-messages {
+    max-height: 500px;
+    overflow: auto;
+}
+
+#chat input {
+    width: 99%;
+}
+
+.chat-message {
+    margin-bottom: 5px;
+}

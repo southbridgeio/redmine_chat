@@ -26,7 +26,7 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.new(chat_message_params)
 
     if @chat_message.save
-      redirect_to @chat_message, notice: 'Chat message was successfully created.'
+      redirect_to @chat_message.issue, notice: 'Chat message was successfully created.'
     else
       render :new
     end
