@@ -1,5 +1,5 @@
 <div class="chat-message">
   <div class="time"><%= format_time chat_message.created_at %></div>
-  <strong><%= chat_message.user.name %></strong><br>
-  <%= chat_message.message %>
+  <strong class="name"><%= chat_message.user.try :name %></strong><br>
+  <span class="message"><%= chat_message.message %></span>
 </div>

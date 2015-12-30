@@ -1,24 +1,19 @@
 class ChatMessagesController < ApplicationController
   unloadable
 
-  before_action :set_chat_message, only: [:show, :edit, :update, :destroy]
+  include Tubesock::Hijack
 
-  # GET /chat_messages
-  def index
-    @chat_messages = ChatMessage.all
-  end
+  def listener
+    channel_name = "issue-#{params[:issue_id]}.chat_message"
 
-  # GET /chat_messages/1
-  def show
-  end
+    hijack do |websocket|
+      receiver = CHAT_MESSENGER.subscribe(channel_name)
+      websocket.onopen do
+        receiver.on_message { |message| websocket.send_data(message) }
+      end
 
-  # GET /chat_messages/new
-  def new
-    @chat_message = ChatMessage.new
-  end
-
-  # GET /chat_messages/1/edit
-  def edit
+      websocket.onclose { CHAT_MESSENGER.unsubscribe(receiver) }
+    end
   end
 
   # POST /chat_messages
@@ -26,6 +21,7 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.new(chat_message_params)
 
     if @chat_message.save
+      CHAT_REDIS.publish("issue-#{@chat_message.issue_id}.chat_message", @chat_message.to_json)
       respond_to do |format|
         format.html { redirect_to @chat_message.issue, notice: 'Chat message was successfully created.' }
         format.js
