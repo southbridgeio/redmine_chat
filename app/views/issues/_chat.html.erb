@@ -20,9 +20,10 @@
   <% end %>
 
   <script>
+    <%= ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
     var socket;
 
-    socket = new WebSocket("ws://" + window.location.host + "/chat_messages/" + <%= @issue.id.to_s %> + "/listener");
+    socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat_messages/" + <%= @issue.id.to_s %> + "/listener");
 
 //    socket.onopen = function() {
 //      alert("Соединение установлено.");
