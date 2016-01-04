@@ -20,7 +20,7 @@
   <% end %>
 
   <script>
-    <%= ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
+    <% ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
     var socket;
 
     socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat_messages/" + <%= @issue.id.to_s %> + "/listener");
