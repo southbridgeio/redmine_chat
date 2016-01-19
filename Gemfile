@@ -1,3 +1,2 @@
-gem 'redis', '~> 3.2'
-gem 'tubesock'
-gem 'msngr'
+gem 'faye', require: false
+gem 'thin', require: false

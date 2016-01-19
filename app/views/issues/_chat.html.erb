@@ -17,60 +17,19 @@
   <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'chat', plugin: 'redmine_chat' %>
     <%= javascript_include_tag 'chat', plugin: 'redmine_chat' %>
+
+    <%= javascript_include_tag "#{chat_url}.js" %>
   <% end %>
 
   <script>
-    <% ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
-    var socket;
+    $(function() {
+      var faye = new Faye.Client('http://localhost:9292/redmine_chat');
+      faye.subscribe("/messages/new", function(data) {
+        eval(data);
+      });
+    });
 
-    socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat_messages/" + <%= @issue.id.to_s %> + "/listener");
 
-//    socket.onopen = function() {
-//      alert("Соединение установлено.");
-//    };
-//
-//    socket.onclose = function(event) {
-//      if (event.wasClean) {
-//        alert('Соединение закрыто чисто');
-//      } else {
-//        alert('Обрыв соединения'); // например, "убит" процесс сервера
-//      }
-//      alert('Код: ' + event.code + ' причина: ' + event.reason);
-//    };
-//
-//    socket.onmessage = function(event) {
-//      alert("Получены данные " + event.data);
-//    };
-//
-//    socket.onerror = function(error) {
-//      alert("Ошибка " + error.message);
-//    };
-//
-//    socket.onopen = function(e) {
-//      return console.log('socket opened');
-//    };
-
-    socket.onmessage = function(e) {
-      var message;
-      console.log('message');
-      if (e.data) {
-        console.log('e.data', e.data);
-        message = $.parseJSON(e.data);
-        $("#chat-messages-<%= @issue.id %>").append("<%= escape_javascript render(ChatMessage.new()) %>");
-        var newMessage = $("#chat-messages-<%= @issue.id %> .chat-message").last();
-        console.log('newMessage', newMessage);
-        newMessage.find('.name').html(message.user);
-        newMessage.find('.time').html(message.created_at);
-        newMessage.find('.message').html(message.message);
-        var element = document.getElementById("chat-messages-<%= @issue.id %>");
-        element.scrollTop = element.scrollHeight;
-        $("#chat_message_message").val('');
-      }
-    };
-
-    socket.onclose = function(e) {
-      return console.log('socket closed');
-    };
   </script>
 
 <% end %>

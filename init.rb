@@ -1,18 +1,13 @@
 require 'redmine'
 require_dependency 'chat/hook_listener'
 require_dependency 'chat/patches/issue_patch'
-
-require 'msngr/clients/redis'
-
-client    = Msngr::Clients::Redis.new
-CHAT_MESSENGER = Msngr.new(client).tap(&:listen!)
-CHAT_REDIS     = Redis.new
+require_dependency 'chat/patches/application_helper_patch'
 
 Redmine::Plugin.register :redmine_chat do
   name 'Redmine Chat plugin'
   url 'https://github.com/centosadmin/redmine_chat'
   description 'This is a plugin for implement chat messaging in Redmine'
-  version '0.0.5'
+  version '0.1.0'
   author 'Centos-admin.ru'
   author_url 'http://centos-admin.ru'
 
