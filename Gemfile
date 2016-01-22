@@ -1,2 +1,2 @@
 gem 'faye', require: false
-gem 'thin', require: false
+gem 'puma', require: false
