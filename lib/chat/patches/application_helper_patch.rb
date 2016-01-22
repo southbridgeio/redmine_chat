@@ -1,3 +1,5 @@
+require 'net/https'
+
 module Chat
   module ApplicationHelperPatch
     def self.included(base) # :nodoc:
