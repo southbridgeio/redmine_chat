@@ -1,7 +1,7 @@
-require 'net/https'
-
 module Chat
   module ApplicationHelperPatch
+    require 'net/https'
+
     def self.included(base) # :nodoc:
       base.module_eval do
         unloadable
