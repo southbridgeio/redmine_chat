@@ -6,7 +6,7 @@ module Chat
 
 
         def chat_url
-          uri_params = {host: Setting['host_name'], path: '/redmine_chat', port: 9292}
+          uri_params = {host: Setting['host_name'], path: '/redmine_chat'}
           if Setting['protocol'] == 'https'
             URI::HTTPS.build(uri_params).to_s
           else
