@@ -20,11 +20,7 @@ module Chat
           message = {channel: channel, data: capture(&block)}
 
           uri = URI.parse chat_url
-          if Setting['protocol'] == 'https'
-            Net::HTTPS.post_form(uri, message: message.to_json)
-          else
-            Net::HTTP.post_form(uri, message: message.to_json)
-          end
+          Net::HTTP.post_form(uri, message: message.to_json)
 
         end
       end
