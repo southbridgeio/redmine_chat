@@ -1,7 +1,4 @@
 require 'faye'
-# require 'logger'
-#
-# Faye.logger = Logger.new(STDOUT)
 
-bayeux = Faye::RackAdapter.new(mount: '/redmine-chat', timeout: 25)
+bayeux = Faye::RackAdapter.new(mount: '/redmine-chat/chat', timeout: 25)
 run bayeux
