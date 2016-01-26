@@ -1,22 +1,63 @@
 <% if @issue.present? and @project.module_enabled?(:chat) %>
-  <div id="chat">
-    <div class="chat-header">
-      <div class="header">Chat</div>
-      <span class="chat-message-counter"><%= @issue.chat_messages.count %></span>
-
+  <div id="chat-button">
+    <div class="header">
+      <% if false and @issue.chat_messages.present? %>
+        Развернуть чат
+      <% else %>
+        Начать live-чат
+      <% end %>
     </div>
+    <!--<span class="chat-message-counter"><%= @issue.chat_messages.count %></span>-->
+
+  </div>
+  <div class="container clearfix" id="new-chat">
+    <div id="chat-close">
+      <i class="fa fa-close"></i>
+    </div>
+    <div class="people-list" id="people-list">
+      <ul class="list">
+        <% @issue.chat_users.each do |user| %>
+          <li class="clearfix">
+            <%= gravatar_image_tag user.email_address.try(:address) %>
+            <div class="about">
+              <div class="name"><%= user.name %></div>
+              <div class="status">
+                <i class="fa fa-circle online"></i> online
+              </div>
+            </div>
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+
     <div class="chat">
 
-      <div class="chat-messages" id="chat-messages-<%= @issue.id %>">
-        <%= render @issue.chat_messages.includes(:user) %>
+
+      <div class="chat-history" id="chat-history-<%= @issue.id %>">
+        <ul>
+          <%= render @issue.chat_messages.includes(:user) %>
+
+        </ul>
+
       </div>
-      <%= render 'chat_messages/form' %>
+
+      <div class="chat-message clearfix">
+        <%= render 'chat_messages/form' %>
+
+
+      </div>
+
     </div>
+
   </div>
+
 
   <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'chat', plugin: 'redmine_chat' %>
+    <%= stylesheet_link_tag 'font-awesome.min', plugin: 'redmine_chat' %>
     <%= javascript_include_tag 'chat', plugin: 'redmine_chat' %>
+    <%= javascript_include_tag 'handlebars.min', plugin: 'redmine_chat' %>
 
     <%= javascript_include_tag "#{chat_url}.js" %>
   <% end %>

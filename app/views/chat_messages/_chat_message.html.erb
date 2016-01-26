@@ -1,5 +1,21 @@
-<div class="chat-message">
-  <div class="time"><%= format_time chat_message.created_at %></div>
-  <strong class="name"><%= chat_message.user.try :name %></strong><br>
-  <span class="message"><%= chat_message.message %></span>
-</div>
+<% if chat_message.user_id == User.current.id %>
+  <li class="clearfix">
+    <div class="message-data align-right">
+      <span class="message-data-time" ><%= format_time chat_message.created_at %></span> &nbsp; &nbsp;
+      <span class="message-data-name" ><%= chat_message.user.try :name %></span> <i class="fa fa-circle me"></i>
+    </div>
+    <div class="message other-message float-right">
+      <%= chat_message.message %>
+    </div>
+  </li>
+<% else %>
+  <li>
+    <div class="message-data">
+      <span class="message-data-name"><i class="fa fa-circle online"></i> <%= chat_message.user.try :name %></span>
+      <span class="message-data-time"><%= format_time chat_message.created_at %></span>
+    </div>
+    <div class="message my-message">
+      <%= chat_message.message %>
+    </div>
+  </li>
+<% end %>

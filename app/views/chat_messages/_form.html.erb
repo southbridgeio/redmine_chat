@@ -2,7 +2,8 @@
 
   <%= f.hidden_field :issue_id, value: @issue.id %>
   <%= f.hidden_field :user_id, value: User.current.id %>
-  <div class="field">
-    <%= f.text_field :message %>
-  </div>
+
+  <%= f.text_area :message %>
+
+  <%= f.button 'Send', id: 'message-to-send' %>
 <% end %>

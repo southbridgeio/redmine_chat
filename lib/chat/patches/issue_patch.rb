@@ -5,6 +5,7 @@ module Chat
         unloadable
 
         has_many :chat_messages
+        has_many :chat_users, -> { uniq }, through: :chat_messages, source: :user
 
       end
     end
