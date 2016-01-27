@@ -17,12 +17,17 @@ module Chat
           end
         end
 
-        def chat_broadcast(channel, &block)
-          message = {channel: channel, data: capture(&block)}
+        def chat_message_token(issue_id, message_id)
+          Base64.encode64 "#{FAYE_TOKEN}-#{issue_id}-#{message_id}"
+        end
+
+        def chat_broadcast(channel, issue_id, message_id, &block)
+          message = {channel: channel,
+                     data: capture(&block),
+                     ext: {auth_token: chat_message_token(issue_id, message_id).chomp, issue_id: issue_id, message_id: message_id}}
 
           uri = URI.parse chat_url
           Net::HTTP.post_form(uri, message: message.to_json)
-
         end
 
         def gravatar_image_tag(email, size = 55)

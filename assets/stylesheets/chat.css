@@ -1,15 +1,12 @@
-
 #chat-button {
   position: fixed;
   right: 5px;
   bottom: 5px;
   width: 300px;
   height: 30px;
-
   background: #293239;
   color: #fff;
   cursor: pointer;
-
 }
 
 #chat-button .header {
@@ -33,19 +30,14 @@
 }
 
 /* NEW */
-
 #new-chat {
   box-sizing: border-box;
   display: none;
-
   position: fixed;
   bottom: 0;
   right: 0;
-
   height: 100%;
-
   color: white;
-
   padding-top: 20px;
   padding-left: 15px;
 }
@@ -115,9 +107,9 @@
   position: absolute;
   right: 5px;
   top: 2px;
-
   cursor: pointer;
 }
+
 .chat {
   width: 505px;
   height: 100%;
@@ -161,12 +153,9 @@
 
 .chat .chat-history {
   overflow-y: scroll;
-
   height: calc(100% - 160px);
-
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
-
 }
 
 .chat .chat-history .message-data {
@@ -224,7 +213,7 @@
   width: 100%;
   border: none;
   padding: 10px 20px;
-  font: 14px/22px "Lato", Arial, sans-serif;
+  font: 14px/22px Arial, sans-serif;
   margin-bottom: 10px;
   border-radius: 5px;
   resize: none;

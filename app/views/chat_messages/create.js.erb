@@ -1,4 +1,4 @@
-<% chat_broadcast '/messages/new' do %>
+<% chat_broadcast '/messages/new', @chat_message.issue_id, @chat_message.id do %>
 
   $("#chat-history-<%= @chat_message.issue_id %> ul").append("<%= escape_javascript render(@chat_message) %>");
 
