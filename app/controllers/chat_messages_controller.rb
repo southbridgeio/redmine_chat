@@ -6,6 +6,7 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.new(chat_message_params)
 
     if @chat_message.save
+      ChatBroadcastWorker.perform_async @chat_message.id
       respond_to do |format|
         format.html { redirect_to @chat_message.issue, notice: 'Chat message was successfully created.' }
         format.js

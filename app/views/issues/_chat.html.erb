@@ -10,7 +10,9 @@
     <!--<span class="chat-message-counter"><%= @issue.chat_messages.count %></span>-->
 
   </div>
-  <div class="container clearfix" id="new-chat">
+  <div class="container clearfix" id="chat" data-issue-id="<%= @issue.id %>"
+                                            data-current-user-id="<%= User.current.id %>"
+                                            data-chat-url="<%= chat_url %>">
     <div id="chat-close">
       <i class="fa fa-close"></i>
     </div>
@@ -37,7 +39,6 @@
       <div class="chat-history" id="chat-history-<%= @issue.id %>">
         <ul>
           <%= render @issue.chat_messages.includes(:user) %>
-
         </ul>
 
       </div>
@@ -45,32 +46,45 @@
       <div class="chat-message clearfix">
         <%= render 'chat_messages/form' %>
 
-
       </div>
 
     </div>
 
   </div>
 
+  <script id="message-template" type="text/x-handlebars-template">
+    <li class="clearfix">
+      <div class="message-data align-right">
+        <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
+        <span class="message-data-name" >{{name}}</span> <i class="fa fa-circle me"></i>
+      </div>
+      <div class="message other-message float-right">
+        {{messageText}}
+      </div>
+    </li>
+  </script>
+
+  <script id="message-response-template" type="text/x-handlebars-template">
+    <li>
+      <div class="message-data">
+        <span class="message-data-name"><i class="fa fa-circle online"></i> {{name}}</span>
+        <span class="message-data-time">{{time}}</span>
+      </div>
+      <div class="message my-message">
+        {{messageText}}
+      </div>
+    </li>
+  </script>
+
 
   <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'chat.min', plugin: 'redmine_chat' %>
     <%= stylesheet_link_tag 'font-awesome.min', plugin: 'redmine_chat' %>
     <%= javascript_include_tag 'chat', plugin: 'redmine_chat' %>
-    <%= javascript_include_tag 'handlebars.min', plugin: 'redmine_chat' %>
+    <%= javascript_include_tag 'handlebars.min-v3.0.0', plugin: 'redmine_chat' %>
 
     <%= javascript_include_tag "#{chat_url}.js" %>
   <% end %>
 
-  <script>
-    $(function() {
-      var faye = new Faye.Client('<%= chat_url %>');
-      faye.subscribe("/messages/new", function(data) {
-        eval(data);
-      });
-    });
-
-
-  </script>
 
 <% end %>

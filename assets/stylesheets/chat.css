@@ -30,7 +30,7 @@
 }
 
 /* NEW */
-#new-chat {
+#chat {
   box-sizing: border-box;
   display: none;
   position: fixed;
@@ -42,7 +42,7 @@
   padding-left: 15px;
 }
 
-#new-chat *, #new-chat *:before, #new-chat *:after {
+#chat *, #chat *:before, #chat *:after {
   box-sizing: border-box;
 }
 

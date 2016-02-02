@@ -1,10 +1,1 @@
-<% chat_broadcast '/messages/new', @chat_message.issue_id, @chat_message.id do %>
-
-  $("#chat-history-<%= @chat_message.issue_id %> ul").append("<%= escape_javascript render(@chat_message) %>");
-
-  var element = document.getElementById("chat-history-<%= @chat_message.issue_id %>");
-  element.scrollTop = $('.chat-history')[0].scrollHeight;
-
-<% end %>
-
 $("#chat_message_message").val('');
