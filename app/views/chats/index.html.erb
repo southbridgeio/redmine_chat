@@ -1,0 +1,31 @@
+<h1>Chats</h1>
+
+<table class="list issues" id="chats" data-chat-url="<%= chat_url %>">
+  <thead>
+    <tr>
+
+      <th><%= l :field_project %></th>
+      <th><%= l :field_issue %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr class="chat-list-item" id="chat-<%= issue.id %>">
+        <td class="project"><%= link_to issue.project.name, project_path(issue.project) %></td>
+        <td class="subject"><%= link_to "##{issue.id} #{issue.subject}", issue_path(issue), target: '_blank' %></td>
+        <td class="new-messages-count"></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "chat.css?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+  <%= stylesheet_link_tag "font-awesome.min.css?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+
+  <%= javascript_include_tag "#{chat_url}.js" %>
+  <%= javascript_include_tag "chat.js?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+  <%= javascript_include_tag "handlebars.min-v3.0.0.js?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+<% end %>
+

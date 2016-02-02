@@ -12,7 +12,8 @@ class ChatBroadcastWorker
                  message: chat_message.message,
                  time: chat_message.created_at.strftime('%H:%M'),
                  name: chat_message.user.try(:name),
-                 user_id: chat_message.user_id
+                 user_id: chat_message.user_id,
+                 issue_id: chat_message.issue_id
                },
                ext: {auth_token: chat_message_token(chat_message.issue_id, chat_message.id).chomp,
                      issue_id: chat_message.issue_id,
