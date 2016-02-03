@@ -13,7 +13,10 @@
     <% @issues.each do |issue| %>
       <tr class="chat-list-item" id="chat-<%= issue.id %>">
         <td class="project"><%= link_to issue.project.name, project_path(issue.project) %></td>
-        <td class="subject"><%= link_to "##{issue.id} #{issue.subject}", issue_path(issue), target: '_blank' %></td>
+        <td class="subject">
+          <%= link_to "##{issue.id} #{issue.subject}", issue_path(issue), target: '_blank' %>
+          <%= link_to 'chat', chat_path(issue.id), target: '_blank' %>
+        </td>
         <td class="new-messages-count"></td>
       </tr>
     <% end %>

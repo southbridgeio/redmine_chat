@@ -1,4 +1,4 @@
-var chatInit = function() {
+var chatInit = function () {
   var chatUrl;
   var faye;
   var chatDiv = document.getElementById('chat');
@@ -10,15 +10,15 @@ var chatInit = function() {
     chatUrl = chatDiv.getAttribute('data-chat-url');
 
     faye = new Faye.Client(chatUrl);
-    faye.subscribe("/messages/new", function(data) {
+    faye.subscribe("/messages/new", function (data) {
       console.log(data);
 
       var template;
 
       if (data['user_id'] == currentUserId) {
-        template = Handlebars.compile( $("#message-template").html());
+        template = Handlebars.compile($("#message-template").html());
       } else {
-        template = Handlebars.compile( $("#message-response-template").html());
+        template = Handlebars.compile($("#message-response-template").html());
       }
 
       var context = {
@@ -40,7 +40,7 @@ var chatInit = function() {
     chatUrl = chatsDiv.getAttribute('data-chat-url');
 
     faye = new Faye.Client(chatUrl);
-    faye.subscribe("/messages/new", function(data) {
+    faye.subscribe("/messages/new", function (data) {
       console.log(data);
 
       issueId = data['issue_id'];
@@ -49,7 +49,7 @@ var chatInit = function() {
       var chatMessagesCounter = $('#chat-' + issueId + ' .new-messages-count');
       var messagesCount = parseInt(chatMessagesCounter.html());
 
-      if (Number.isInteger(messagesCount) ) {
+      if (Number.isInteger(messagesCount)) {
         messagesCount++;
         chatMessagesCounter.html(messagesCount)
       } else {
@@ -62,7 +62,7 @@ var chatInit = function() {
   return chatDiv;
 };
 
-$(function() {
+$(function () {
   var chatDiv = chatInit();
   if (chatDiv) {
 

@@ -7,5 +7,7 @@ class ChatsController < ApplicationController
   end
 
   def show
+    @issue = Issue.visible.find(params[:id])
+    @project = @issue.project
   end
 end
