@@ -3,3 +3,6 @@ Gemfile.lock
 config/puma.rb
 config/chat.yml
 node_modules
+
+/dist/
+.sass-cache/

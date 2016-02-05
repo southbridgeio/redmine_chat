@@ -1,0 +1,123 @@
+body {
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.hero-unit {
+  margin: 50px auto 0 auto;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px;
+  h1 {
+    font-size: 65px;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.ChatContainer {
+  width: 1177px;
+  height: 1350px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #3e5a76;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  header {
+    height: 80px;
+  }
+  .ChatWrapper {
+    display: flex;
+
+    aside {
+      width: 360px;
+
+      display: flex;
+      flex-direction: column;
+
+      .UserList {
+        height: 450px;
+
+        .UserListItem {
+          .UserPhoto {
+
+          }
+          .UserName {
+
+          }
+        }
+      }
+
+      .ChatList {
+        background-color: #507aa9;
+        .ChatListItem {
+
+        }
+      }
+    }
+    .Chat {
+      display: flex;
+      flex-direction: column;
+
+      background-color: white;
+
+      header {
+        display: flex;
+        h1 {
+          font-family: Roboto;
+          font-size: 41.93px;
+          line-height: 46.584px;
+          color: #212121;
+          font-weight: 500;
+        }
+        .ChatLabel {
+          height: 32px;
+          font-size: 16.6px;
+          line-height: 58.023px;
+          color: #507aa9;
+          font-weight: 700;
+
+        }
+      }
+
+      .Messages {
+        display: flex;
+        flex-direction: column;
+        .MessagesDate {
+
+        }
+        .Message {
+          header {
+            .UserName {
+
+            }
+            time {
+
+            }
+          }
+
+          .MessageBody {
+
+          }
+        }
+      }
+    }
+  }
+}
