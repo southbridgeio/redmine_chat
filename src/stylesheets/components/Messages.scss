@@ -1,0 +1,10 @@
+@import "Message";
+.Messages {
+  display: flex;
+  flex-direction: column;
+  padding: 0 38px 0 42px;
+  .MessagesDate {
+    color: #ccc;
+    @include bold;
+  }
+}
