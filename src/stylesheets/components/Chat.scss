@@ -1,0 +1,41 @@
+@import "MessageList";
+@import "MessageBox";
+
+.Chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: white;
+
+  .ChatHeader {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    padding: 53px 37px 26px 39px;
+    h1 {
+      margin: 0;
+      @include medium(36px);
+
+      line-height: 40px;
+      color: #212121;
+
+
+    }
+    .ChatLabel {
+      height: 32px;
+      margin-top: 6px;
+      border: 2px solid #507aa9;
+      padding: 9px 18px;
+
+      @include bold;
+
+      line-height: 11px;
+      color: #507aa9;
+      text-transform: uppercase;
+
+    }
+  }
+
+
+}

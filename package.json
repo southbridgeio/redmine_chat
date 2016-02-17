@@ -33,6 +33,7 @@
     "reactify": "latest",
     "rimraf": "^2.3.1",
     "strip-debug": "^1.0.1",
+    "trim": "0.0.1",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "~2.1"
   },

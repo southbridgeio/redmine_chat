@@ -1,17 +1,17 @@
 <div id="ChatApp"></div>
 <%= javascript_include_tag "app.js?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
 <% if @issue.present? and @project.module_enabled?(:chat) %>
-  <div id="chat-button">
-    <div class="header">
-      <% if false and @issue.chat_messages.present? %>
-        Развернуть чат
-      <% else %>
-        Начать live-чат
-      <% end %>
-    </div>
-    <!--<span class="chat-message-counter"><%= @issue.chat_messages.count %></span>-->
+  <!--<div id="chat-button">-->
+    <!--<div class="header">-->
+      <!--<% if false and @issue.chat_messages.present? %>-->
+        <!--Развернуть чат-->
+      <!--<% else %>-->
+        <!--Начать live-чат-->
+      <!--<% end %>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<span class="chat-message-counter"><%= @issue.chat_messages.count %></span>&ndash;&gt;-->
 
-  </div>
+  <!--</div>-->
   <div class="container clearfix" id="chat" data-issue-id="<%= @issue.id %>"
                                             data-current-user-id="<%= User.current.id %>"
                                             data-chat-url="<%= chat_url %>">

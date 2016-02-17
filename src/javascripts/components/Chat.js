@@ -1,7 +1,8 @@
 'use strict';
 
 var React = require('react'),
-    Messages = require("./Messages");
+    MessageList = require("./MessageList"),
+    MessageBox = require("./MessageBox");
 
 var Chat = React.createClass({
 
@@ -13,7 +14,8 @@ var Chat = React.createClass({
           <h1>#104708 Название тикета. Новый плагин: redmine_chat</h1>
           <div className="ChatLabel">Архив</div>
         </header>
-        <Messages />
+        <MessageList />
+        <MessageBox />
       </section>
     );
   }

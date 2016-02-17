@@ -26,7 +26,7 @@ var ChatApp = React.createClass({
 
             </ul>
           </aside>
-          <Chat chatUrl={this.props.remineUrl + 'chats/' + this.state.chatId}/>
+          <Chat chatUrl={this.props.redmineUrl + 'chats/' + this.state.chatId}/>
         </div>
       </div>
     );

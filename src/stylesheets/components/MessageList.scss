@@ -1,8 +1,11 @@
 @import "Message";
-.Messages {
+.MessageList {
   display: flex;
   flex-direction: column;
   padding: 0 38px 0 42px;
+
+  overflow-x: auto;
+
   .MessagesDate {
     color: #ccc;
     @include bold;

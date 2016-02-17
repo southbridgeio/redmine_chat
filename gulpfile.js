@@ -94,7 +94,7 @@ function rebundle() {
         .on('error', $.util.log.bind($.util, 'Browserify Error'))
         .pipe(source(destFileName))
         .pipe(gulp.dest(destFolder))
-        .pipe(gulp.dest('../../public/plugin_assets/redmine_chat/javascripts'));;
+        .pipe(gulp.dest('../../public/plugin_assets/redmine_chat/javascripts'));
 }
 
 // Scripts

@@ -3,11 +3,11 @@
 var React = require('react'),
     Message = require("./Message");
 
-var Messages = React.createClass({
+var MessageList = React.createClass({
 
   render: function() {
     return (
-      <section className="Messages">
+      <section className="MessageList">
         <div className="MessagesDate">5 ФЕВ</div>
         <Message
           name = "Игорь Олемской"
@@ -33,4 +33,4 @@ var Messages = React.createClass({
 });
 
 
-module.exports = Messages;
+module.exports = MessageList;
