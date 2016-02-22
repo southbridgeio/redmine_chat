@@ -10,7 +10,7 @@ class ChatBroadcastWorker
     message = {channel: channel,
                data: {
                  message: chat_message.message,
-                 time: chat_message.created_at.strftime('%H:%M'),
+                 time: chat_message.created_at,
                  name: chat_message.user.try(:name),
                  user_id: chat_message.user_id,
                  issue_id: chat_message.issue_id

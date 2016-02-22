@@ -7,6 +7,11 @@ module Chat
         has_many :chat_messages
         has_many :chat_users, -> { uniq }, through: :chat_messages, source: :user
 
+        def chat_shared_key
+          Digest::MD5.hexdigest(FAYE_TOKEN + id.to_s)
+
+        end
+
       end
     end
 
