@@ -1,0 +1,69 @@
+upstream redmine {
+    # Path to Unicorn SOCK file, as defined previously
+    server unix:/Users/artur/projects/redmine/tmp/sockets/redmine.sock fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name localhost;
+
+    access_log  /Users/artur/projects/redmine/log/nginx.access.log;
+    error_log  /Users/artur/projects/redmine/log/nginx.error.log;
+
+    root /Users/artur/projects/redmine/public;
+
+    try_files $uri/index.html $uri @redmine;
+
+    location @redmine {
+        proxy_pass http://redmine;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+    }
+
+    location /redmine-chat/chat {
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+
+        proxy_redirect off;
+        proxy_pass http://localhost:9292;
+        proxy_http_version 1.1;
+
+        proxy_connect_timeout 90;
+        proxy_send_timeout 90;
+        proxy_read_timeout 90;
+
+
+        break;
+    }
+
+    location /redmine-chat/faye-browser-min {
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+
+        proxy_redirect off;
+        proxy_pass http://localhost:9292;
+        proxy_http_version 1.1;
+
+        proxy_connect_timeout 90;
+        proxy_send_timeout 90;
+        proxy_read_timeout 90;
+
+
+        break;
+    }
+
+    error_page 500 502 503 504 /500.html;
+    client_max_body_size 4G;
+    keepalive_timeout 10;
+}

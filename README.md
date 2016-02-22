@@ -1,5 +1,11 @@
 # redmine_chat
 
+copy unicorn.rb example to redmine/config/unicorn.rb
+and than run
+```unicorn -c config/unicorn.rb```
+
+also you can see in nginx.example
+
 add to Gemfile.local
 
 gem 'puma'
