@@ -8,9 +8,12 @@ class ChatApi::MessagesController < ChatApi::BaseController
     respond_with @messages
   end
 
-  # POST /chat_messages
+  # POST /messages
   def create
-    @chat_message = ChatMessage.new(chat_message_params)
+    @issue = Issue.find(params[:chat_id])
+    @chat_message = @issue.chat_messages.new(message: params[:message])
+    @chat_message.chat_user_id = params[:user_id]
+    @chat_message.user_name = User.find_by(id: params[:user_id]).try(:name)
 
     if @chat_message.save
       ChatBroadcastWorker.perform_async @chat_message.id
@@ -18,10 +21,13 @@ class ChatApi::MessagesController < ChatApi::BaseController
     else
       render json: @chat_message.errors.as_json
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Chat with id #{params[:chat_id]} not found"}, status: 404
   end
 
-  # PATCH/PUT /chat_messages/1
+  # PATCH/PUT /messages/1
   def update
+    @chat_message = ChatMessage.find(params[:id])
     if @chat_message.update(chat_message_params)
       render json: @chat_message.as_json
     else
@@ -29,20 +35,11 @@ class ChatApi::MessagesController < ChatApi::BaseController
     end
   end
 
-  # DELETE /chat_messages/1
+  # DELETE /messages/1
   def destroy
+    @chat_message = ChatMessage.find(params[:id])
     @chat_message.destroy
     render json:  {notice: 'Chat message was successfully destroyed.'}
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_chat_message
-      @chat_message = ChatMessage.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def chat_message_params
-      params.require(:chat_message).permit(:issue_id, :user_id, :message)
-    end
 end

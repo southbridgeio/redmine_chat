@@ -9,9 +9,9 @@ class ChatMessage < ActiveRecord::Base
   def as_json(options = {})
     {
       id: id,
-      issue_id: issue_id,
-      created_at: format_time(created_at),
-      user: user.name,
+      chat_id: issue_id,
+      created_at: created_at,
+      user: user_name,
       message: message
     }
   end
