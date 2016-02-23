@@ -1,11 +1,9 @@
 class ChatApi::MessagesController < ChatApi::BaseController
   unloadable
-  respond_to :json
 
   def index
     @issue = Issue.find(params[:chat_id])
     @messages = @issue.chat_messages.page(params[:page])
-    respond_with @messages
   end
 
   # POST /messages

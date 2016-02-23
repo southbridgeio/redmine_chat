@@ -1,4 +1,4 @@
-module Chat
+module RedmineChat
   module IssuePatch
     def self.included(base) # :nodoc:
       base.class_eval do
@@ -17,4 +17,4 @@ module Chat
 
   end
 end
-Issue.send(:include, Chat::IssuePatch)
+Issue.send(:include, RedmineChat::IssuePatch)

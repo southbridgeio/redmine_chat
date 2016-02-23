@@ -1,10 +1,8 @@
-module Chat
+module RedmineChat
   module ApplicationHelperPatch
     def self.included(base) # :nodoc:
       base.module_eval do
         unloadable
-
-        include Chat
 
         def gravatar_image_tag(email, size = 55)
           email = 'anonymous@example.com' unless email.present?
@@ -17,4 +15,4 @@ module Chat
 
   end
 end
-ApplicationHelper.send(:include, Chat::ApplicationHelperPatch)
+ApplicationHelper.send(:include, RedmineChat::ApplicationHelperPatch)

@@ -1,4 +1,4 @@
-module Chat
+module RedmineChat
   CHAT_COMMIT_HASH = `cd #{Rails.root}/plugins/redmine_chat && git rev-parse --short HEAD`.chomp
 
   def self.chat_url
@@ -11,7 +11,7 @@ module Chat
   end
 
   def chat_url
-    Chat.chat_url
+    RedmineChat.chat_url
   end
 
   def self.commit_hash

@@ -13,7 +13,7 @@ class ChatBroadcastWorker
                      issue_id: chat_message.issue_id,
                      message_id: chat_message.id}}
 
-    uri = URI.parse Chat.chat_url
+    uri = URI.parse RedmineChat.chat_url
 
     Net::HTTP.post_form(uri, message: message.to_json)
   end

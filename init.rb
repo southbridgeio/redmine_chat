@@ -1,9 +1,12 @@
+require 'connection_pool'
+Redis::Objects.redis = ConnectionPool.new(size: 5, timeout: 5) { Redis.new(host: '127.0.0.1', port: 6379) }
+
 require 'redmine'
-require_dependency 'chat'
-require_dependency 'chat/hook_listener'
-require_dependency 'chat/faye_token'
-require_dependency 'chat/patches/issue_patch'
-require_dependency 'chat/patches/application_helper_patch'
+require_dependency 'redmine_chat'
+require_dependency 'redmine_chat/hook_listener'
+require_dependency 'redmine_chat/faye_token'
+require_dependency 'redmine_chat/patches/issue_patch'
+require_dependency 'redmine_chat/patches/application_helper_patch'
 
 Redmine::Plugin.register :redmine_chat do
   name 'Redmine Chat plugin'

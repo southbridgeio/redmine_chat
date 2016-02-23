@@ -1,5 +1,5 @@
 <div id="ChatApp"></div>
-<%= javascript_include_tag "app.js?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+<%= javascript_include_tag "app.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 <% if @issue.present? and @project.module_enabled?(:chat) %>
   <!--<div id="chat-button">-->
     <!--<div class="header">-->
@@ -80,7 +80,7 @@
 
 
   <% content_for :header_tags do %>
-    <%= stylesheet_link_tag "main.css?#{Chat.commit_hash}", plugin: 'redmine_chat' %>
+    <%= stylesheet_link_tag "main.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 
     <%= javascript_include_tag "#{chat_url}.js" %>
 
