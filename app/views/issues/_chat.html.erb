@@ -1,6 +1,7 @@
 <div id="ChatApp"></div>
 <%= javascript_include_tag "app.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-<% if @issue.present? and @project.module_enabled?(:chat) %>
+
+<% if false and @issue.present? and @project.module_enabled?(:chat) %>
   <!--<div id="chat-button">-->
     <!--<div class="header">-->
       <!--<% if false and @issue.chat_messages.present? %>-->
