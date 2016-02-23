@@ -3,7 +3,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
 
   def index
     @issue = Issue.find(params[:chat_id])
-    @messages = @issue.chat_messages.page(params[:page])
+    @messages = @issue.chat_messages.order('created_at desc').limit(20).offset(params[:offset])
   end
 
   # POST /messages
