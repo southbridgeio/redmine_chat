@@ -35,11 +35,15 @@ class ChatApi::MessagesController < ChatApi::BaseController
     end
   end
 
-  # DELETE /messages/1
+  # DELETE chat/:chat_id/messages/:id
   def destroy
     @chat_message = ChatMessage.find(params[:id])
-    @chat_message.destroy
-    render json: { notice: 'Chat message was successfully destroyed.' }
+    if @chat_message.chat_user_id == params[:user_id].to_s
+      @chat_message.destroy
+      render json: { notice: 'Chat message was successfully destroyed.' }
+    else
+      render json: { error: "Can't to destroy message from other user." }
+    end
   end
 
 end
