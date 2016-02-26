@@ -35,4 +35,17 @@ class ChatApi::ChatsController < ChatApi::BaseController
 
     render :join
   end
+
+  def invite
+    @issue = Issue.find(params[:id])
+    @chat = Chat.new(@issue.id)
+    @chat_user = ChatUser.new(params[:user_id])
+    if @chat_user.id.to_s.include?('guest')
+      @notes = "Пользователь #{@chat_user.name.value} приглашает в чат."
+      @issue.journals.create(user_id: User.anonymous.id, notes: @notes)
+    else
+      @notes = 'Приглашаю войти в чат.'
+      @issue.journals.create(user_id: @chat_user.id, notes: @notes)
+    end
+  end
 end
