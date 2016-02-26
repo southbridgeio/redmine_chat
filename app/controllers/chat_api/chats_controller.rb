@@ -48,4 +48,13 @@ class ChatApi::ChatsController < ChatApi::BaseController
       @issue.journals.create(user_id: @chat_user.id, notes: @notes)
     end
   end
+
+  def exit
+    @issue = Issue.find(params[:id])
+    @chat = Chat.new(@issue.id)
+    @chat_user = ChatUser.new(params[:user_id])
+
+    @chat.user_ids.delete @chat_user.id
+    @chat_user.chat_ids.delete @chat.id
+  end
 end
