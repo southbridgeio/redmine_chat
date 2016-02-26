@@ -2,25 +2,27 @@ class ChatApi::MessagesController < ChatApi::BaseController
   unloadable
 
   def index
-    @issue = Issue.find(params[:chat_id])
+    @issue    = Issue.find(params[:chat_id])
     @messages = @issue.chat_messages.order('created_at desc').limit(20).offset(params[:offset])
   end
 
   # POST /messages
   def create
-    @issue = Issue.find(params[:chat_id])
-    @chat_message = @issue.chat_messages.new(message: params[:message])
+    @issue                     = Issue.find(params[:chat_id])
+    @chat_message              = @issue.chat_messages.new(message: params[:message])
     @chat_message.chat_user_id = params[:user_id]
-    @chat_message.user_name = User.find_by(id: params[:user_id]).try(:name)
+    if params[:user_id].present?
+      @chat_message.user_name = ChatUser.new(params[:user_id]).try(:name).try(:value)
+    end
 
     if @chat_message.save
       ChatBroadcastWorker.perform_async @chat_message.id
       render json: @chat_message.as_json
     else
-      render json: @chat_message.errors.as_json
+      render json: @chat_message.errors.as_json, status: :forbidden
     end
   rescue ActiveRecord::RecordNotFound
-    render json: {error: "Chat with id #{params[:chat_id]} not found"}, status: 404
+    render json: { error: "Chat with id #{params[:chat_id]} not found" }, status: :not_found
   end
 
   # PATCH/PUT /messages/1
@@ -37,7 +39,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
   def destroy
     @chat_message = ChatMessage.find(params[:id])
     @chat_message.destroy
-    render json:  {notice: 'Chat message was successfully destroyed.'}
+    render json: { notice: 'Chat message was successfully destroyed.' }
   end
 
 end
