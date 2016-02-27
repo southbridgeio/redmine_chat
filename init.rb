@@ -6,13 +6,14 @@ require_dependency 'redmine_chat'
 require_dependency 'redmine_chat/hook_listener'
 require_dependency 'redmine_chat/faye_token'
 require_dependency 'redmine_chat/patches/issue_patch'
+require_dependency 'redmine_chat/patches/issues_controller_patch'
 require_dependency 'redmine_chat/patches/application_helper_patch'
 
 Redmine::Plugin.register :redmine_chat do
   name 'Redmine Chat plugin'
   url 'https://github.com/centosadmin/redmine_chat'
   description 'This is a plugin for implement chat messaging in Redmine'
-  version '1.3.6'
+  version '1.4.1'
   author 'Centos-admin.ru'
   author_url 'http://centos-admin.ru'
 

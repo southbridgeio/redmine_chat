@@ -2,18 +2,20 @@ class ChatApi::MessagesController < ChatApi::BaseController
   unloadable
 
   def index
-    @issue    = Issue.find(params[:chat_id])
-    @messages = @issue.chat_messages.order('created_at desc').limit(20).offset(params[:offset])
+    @issue          = Issue.find(params[:chat_id])
+    messages        = @issue.chat_messages.order('created_at desc')
+    messages        = messages.where(stared: true)                             if params[:stared].present?
+    messages        = messages.where('message LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    @total_messages = messages.count
+    @messages       = messages.limit(20).offset(params[:offset])
   end
 
   # POST /messages
   def create
     @issue                = Issue.find(params[:chat_id])
     @message              = @issue.chat_messages.new(message: params[:message])
-    @message.chat_user_id = params[:user_id]
-    if params[:user_id].present?
-      @message.user_name = ChatUser.new(params[:user_id]).try(:name).try(:value)
-    end
+    @message.chat_user_id = @chat_user.id
+    @message.user_name    = @chat_user.try(:name).try(:value)
 
     if @message.save
       ChatBroadcastWorker.perform_async @message.id
@@ -28,7 +30,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
   # DELETE chat/:chat_id/messages/:id
   def destroy
     @message = ChatMessage.find(params[:id])
-    if @message.chat_user_id == params[:user_id].to_s
+    if @message.chat_user_id == @chat_user.id.to_s
       @message.destroy
       render json: { notice: 'Chat message was successfully destroyed.' }
     else

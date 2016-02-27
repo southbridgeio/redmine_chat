@@ -18,7 +18,20 @@ class ChatUser
   end
 
   def chats
-    chat_ids.members(with_scores: true)
+    issues = Issue.where(id: chat_ids.members)
+    chat_ids.members(with_scores: true).map do |chat_id, time_int|
+      issue = issues.find { |i| i.id == chat_id.to_i }
+      chat  = Chat.new(chat_id)
+      {
+        id:              chat_id,
+        title:           issue.subject,
+        active:          !issue.closed?,
+        archive:         issue.closed?,
+        shared_key:      issue.chat_shared_key,
+        last_visited_at: Time.zone.at(time_int),
+        users:           chat.users
+      }
+    end
   end
 
 end

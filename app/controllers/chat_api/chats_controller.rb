@@ -12,28 +12,27 @@ class ChatApi::ChatsController < ChatApi::BaseController
 
   def join
     @issue = Issue.find(params[:id])
-    @user = User.find(params[:user_id])
 
     @chat = Chat.new(@issue.id)
-    @chat_user = ChatUser.new(@user.id)
     @chat_user.name = @user.name
     @chat_user.email = @user.mail
 
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
+
+    render :show
   end
 
   def guest_join
     @issue = Issue.find(params[:id])
     @chat = Chat.new(@issue.id)
 
-    @chat_user = ChatUser.new(params[:guest_id])
     @chat_user.name = params[:name]
 
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    render :join
+    render :show
   end
 
   def invite
