@@ -20,7 +20,9 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    render :show
+    ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
+
+    render 'chat_api/users/public'
   end
 
   def guest_join
@@ -32,13 +34,14 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    render :show
+    ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
+
+    render 'chat_api/users/public'
   end
 
   def invite
     @issue = Issue.find(params[:id])
     @chat = Chat.new(@issue.id)
-    @chat_user = ChatUser.new(params[:user_id])
     if @chat_user.id.to_s.include?('guest')
       @notes = "Пользователь #{@chat_user.name.value} приглашает в чат."
       @issue.journals.create(user_id: User.anonymous.id, notes: @notes)
@@ -51,9 +54,10 @@ class ChatApi::ChatsController < ChatApi::BaseController
   def exit
     @issue = Issue.find(params[:id])
     @chat = Chat.new(@issue.id)
-    @chat_user = ChatUser.new(params[:user_id])
 
     @chat.user_ids.delete @chat_user.id
     @chat_user.chat_ids.delete @chat.id
+
+    ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'user_exit', render_to_string('chat_api/chats/show')
   end
 end

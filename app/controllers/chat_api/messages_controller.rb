@@ -18,7 +18,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
     @message.user_name    = @chat_user.try(:name).try(:value)
 
     if @message.save
-      ChatBroadcastWorker.perform_async @message.id
+      ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'message_new', @message.as_json
       render json: @message.as_json
     else
       render json: @message.errors.as_json, status: :forbidden
@@ -31,6 +31,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
   def destroy
     @message = ChatMessage.find(params[:id])
     if @message.chat_user_id == @chat_user.id.to_s
+      ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'message_delete', @message.as_json
       @message.destroy
       render json: { notice: 'Chat message was successfully destroyed.' }
     else
