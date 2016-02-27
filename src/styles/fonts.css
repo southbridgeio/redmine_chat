@@ -1,0 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic-ext);
+
+.robotoRegular {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+
+.robotoMedium {
+  font-family: 'Roboto Medium', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+.robotoBold {
+  font-family: 'Roboto Bold', Helvetica, Arial, sans-serif;
+  font-weight: bold;
+}
