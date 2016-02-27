@@ -6,5 +6,5 @@ json.sounds_on @chat_user.sounds_on
 
 json.chats @chat_user.chats do |chat_id, time_int|
   json.chat_id chat_id
-  json.last_visited_at Time.at(time_int)
+  json.last_visited_at Time.zone.at(time_int)
 end

@@ -17,6 +17,7 @@ namespace :chat_api, path: 'chat-api', format: 'json' do
     member do
       put :mute
       put :unmute
+      put :update_last_visited
     end
   end
 end
