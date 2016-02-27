@@ -8,38 +8,28 @@ class ChatApi::MessagesController < ChatApi::BaseController
 
   # POST /messages
   def create
-    @issue                     = Issue.find(params[:chat_id])
-    @chat_message              = @issue.chat_messages.new(message: params[:message])
-    @chat_message.chat_user_id = params[:user_id]
+    @issue                = Issue.find(params[:chat_id])
+    @message              = @issue.chat_messages.new(message: params[:message])
+    @message.chat_user_id = params[:user_id]
     if params[:user_id].present?
-      @chat_message.user_name = ChatUser.new(params[:user_id]).try(:name).try(:value)
+      @message.user_name = ChatUser.new(params[:user_id]).try(:name).try(:value)
     end
 
-    if @chat_message.save
-      ChatBroadcastWorker.perform_async @chat_message.id
-      render json: @chat_message.as_json
+    if @message.save
+      ChatBroadcastWorker.perform_async @message.id
+      render json: @message.as_json
     else
-      render json: @chat_message.errors.as_json, status: :forbidden
+      render json: @message.errors.as_json, status: :forbidden
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Chat with id #{params[:chat_id]} not found" }, status: :not_found
   end
 
-  # PATCH/PUT /messages/1
-  def update
-    @chat_message = ChatMessage.find(params[:id])
-    if @chat_message.update(chat_message_params)
-      render json: @chat_message.as_json
-    else
-      render json: @chat_message.errors.as_json
-    end
-  end
-
   # DELETE chat/:chat_id/messages/:id
   def destroy
-    @chat_message = ChatMessage.find(params[:id])
-    if @chat_message.chat_user_id == params[:user_id].to_s
-      @chat_message.destroy
+    @message = ChatMessage.find(params[:id])
+    if @message.chat_user_id == params[:user_id].to_s
+      @message.destroy
       render json: { notice: 'Chat message was successfully destroyed.' }
     else
       render json: { error: "Can't to destroy message from other user." }

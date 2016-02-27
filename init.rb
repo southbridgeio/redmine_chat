@@ -12,7 +12,7 @@ Redmine::Plugin.register :redmine_chat do
   name 'Redmine Chat plugin'
   url 'https://github.com/centosadmin/redmine_chat'
   description 'This is a plugin for implement chat messaging in Redmine'
-  version '1.3.5'
+  version '1.3.6'
   author 'Centos-admin.ru'
   author_url 'http://centos-admin.ru'
 
