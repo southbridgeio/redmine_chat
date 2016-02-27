@@ -1,6 +1,6 @@
 require 'faye'
 
-require File.expand_path('../lib/chat/faye_token.rb', __FILE__)
+require File.expand_path('../lib/redmine_chat/faye_token.rb', __FILE__)
 
 class ServerAuth
   def incoming(message, callback)
