@@ -1,22 +1,58 @@
-import Faye from 'faye';
 import {WS_URL} from 'settings';
 
+var token = null;
 
-const Client = new Faye.Client(WS_URL);
+export function setWsToken(authToken) {
+    token = authToken;
+}
+const TYPE_MAP = {
+    "message_new": "RECEIVE_MESSAGE"
+}
+var chatSockets = {};
 
-Client.on('transport:up', () => {
-    console.log('transport up');
-});
+function handler(channelId, dispatch) {
+    return function onChannelMessage(message) {
+        try {
+            message = JSON.parse(message.data);
+        } catch(e) {
+            return console.log('error parsing');
+        }
+        if (message.type === "message_new") {
 
-function onChannelMessage(message) {
-    console.log(message);
+            dispatch({
+                type: "RECEIVE_MESSAGE",
+                channelId: message.payload.chat_id,
+                data:  {
+                    id: message.payload.id,
+                    created_at: message.payload.created_at,
+                    name: message.payload.name,
+                    message: message.payload.message
+                }
+            });
+        }
+
+    } 
 }
 
-export function subscribeToChannel(channelId) {
-    Client.then(() => {
-        console.log('subscribing');
-        Client.subscribe('chat/}', onChannelMessage).then(() => {
-            console.log('subscribed');
-        }, (err) => console.log(err));
-    })
+export function subscribeToGlobal(dispatch) {
+    return;
+    const globalUpdates = new WebSocket(`${WS_URL}/user_events?token=${token}`)
+    globalUpdates.onopen = () => {
+        console.log('socket opened');
+    }
+    globalUpdates.onmessage = () => {
+        console.log(arguments);
+    }
+}
+export function subscribeToChannel(channelId, dispatch) {
+    if (!chatSockets[channelId]) {
+        const socket = new WebSocket(`${WS_URL}/${channelId}/events?token=${token}`);
+        socket.onmessage = handler(channelId, dispatch);
+        socket.onerror = function (error) {
+            console.log("Ошибка " + error.message);
+        };
+        socket.onopen = function (e) {
+            return console.log('socket opened');
+        };       
+    }
 }

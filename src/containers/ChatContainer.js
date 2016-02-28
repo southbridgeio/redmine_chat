@@ -1,19 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
+
+import ChatTop from 'components/chat/ChatTop';
+
 import MessageList from 'components/chat/MessageList';
 import MessageComposer from 'components/chat/MessageComposer';
 
-import styles from 'styles/chat.css';
-
 import * as actions from '../actions/actions';
+import styles from 'styles/chat.module.css';
 
-class TopBar extends React.Component {
-    render() {
-        return (
-            <div>top</div>
-        )
-    }
-}
 class ChatContainer extends React.Component {
     componentWillMount() {
         const { dispatch, user } = this.props;
@@ -21,23 +16,27 @@ class ChatContainer extends React.Component {
     }
     _sendMessage(message) {
         const {dispatch} = this.props;
-        dispatch(actions.sendMessage(1, message))
+        dispatch(actions.sendMessage(this.props.currentChannel, message))
     }
     _deleteMessage(msgId) {
-        console.log(msgId);
         const {dispatch} = this.props;
-        dispatch(actions.deleteMessage(1, msgId));
+        dispatch(actions.deleteMessage(this.props.currentChannel, msgId));
     }
     render() {
+        if (this.props.currentChannel === null) {
+            return <div className={styles.container}>выберите чат</div>
+        }
         return (
-            <div className={styles.container}>
-                <TopBar className={styles.topbar}/>
-                <MessageList 
-                    channelTitle={this.props.channelTitle}
-                    messages={this.props.messages} 
-                    onDeleteMessage={::this._deleteMessage}
-                />
-                <MessageComposer sendMessage={::this._sendMessage}/>
+            <div className={styles.chatcontainer}>
+                <div className={styles.chatbox}>
+                    <div className={styles.channel_title}>{this.props.channelTitle}</div>
+                    <MessageList 
+                        channelTitle={this.props.channelTitle}
+                        messages={this.props.messages} 
+                        onDeleteMessage={::this._deleteMessage}
+                    />
+                    <MessageComposer sendMessage={::this._sendMessage}/>
+                </div>
             </div>
         )
     }
@@ -45,7 +44,8 @@ class ChatContainer extends React.Component {
 
 export default connect((state) => {
     return {
+        currentChannel: state.account.currentChannel,
         channelTitle: state.account.channels[state.account.currentChannel].title,
-        messages: state.messages.data
+        messages: state.chats.messages[state.account.currentChannel] || null
     }
 })(ChatContainer);

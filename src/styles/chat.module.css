@@ -1,0 +1,72 @@
+.chatcontainer {
+    height: 100%;
+    flex: 1;
+}
+
+.topbar {
+    height: 50px;
+    composes: darkbluebg from 'styles/colors.module.css';
+}
+
+.chatbox {
+    margin: 0 20px;
+    max-height: 100%;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.channel_title {
+    flex-grow: 1;
+    composes: medium from 'styles/fonts.module.css';
+    font-size: 36px;
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #eee;
+}
+
+
+.messagelist {
+    flex-grow: 1;
+    overflow: scroll;
+    padding: 10px;
+}
+
+
+.composer {
+    flex-grow: 0;
+    align-self: flex-end;
+    width: 100%;
+}
+
+.composer__textarea {
+    font-size: 18px;
+    padding: 15px;
+    width: 100%;
+    outline: 2px solid #bacde1;
+    border: none; 
+    border-radius: 4px;
+}
+
+.composer__buttons {
+    text-align: right;
+    margin: 20px 0;
+    line-height: 60px;
+}
+
+.composer__buttons__invite {
+    composes: bold from 'styles/fonts.module.css';
+    text-decoration: none;
+    float: left;
+    text-transform: uppercase;
+}
+.composer__buttons__send {
+    text-decoration: none;
+    text-transform: uppercase;
+    composes: bluebg from 'styles/colors.module.css';
+    padding: 0 50px;
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+    border-radius: 30px;
+
+}

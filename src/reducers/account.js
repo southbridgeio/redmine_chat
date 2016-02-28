@@ -9,6 +9,10 @@ const initialState = {
 
 export default function messages(state = initialState, action) {
     switch (action.type) {
+        case types.CHANGE_CHANNEL:
+            return {...state,
+                currentChannel: action.channelId
+            }
         case types.LOAD_ACCOUNT_INFO_SUCCESS:
             return {...state,
                 loaded: true,
@@ -17,7 +21,6 @@ export default function messages(state = initialState, action) {
                     return memo;
                 }, {})
             }
-        break;
         default:
             return state;
     }

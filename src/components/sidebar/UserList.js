@@ -1,13 +1,13 @@
 import React from 'react';
 
-import styles from 'styles/sidebar.css';
+import styles from 'styles/sidebar.module.css';
 
 class User extends React.Component {
     render() {
         return (
-            <div className={styles.user}>
-                <img className={styles.user_avatar} src={this.props.user.photo_url}/>
-                <div className={styles.user_name}>{this.props.user.name}</div>
+            <div className={styles.userlist__user}>
+                <img className={styles.userlist__user__avatar} src={this.props.user.photo_url}/>
+                <div className={styles.userlist__user__name}>{this.props.user.name}</div>
             </div>
         )
     }

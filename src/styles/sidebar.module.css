@@ -1,0 +1,57 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+    composes: darkbluebg from 'styles/colors.module.css';
+}
+
+.channellist {
+    flex: 1;
+    composes: bluebg from 'styles/colors.module.css';
+}
+
+.channellist__channel {
+    cursor: pointer;
+    position: relative;
+    padding: 30px;
+    border-bottom: 1px solid #7294ba;
+}
+
+.channellist__channel__selection {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0; 
+	height: 0; 
+    margin-top: -15px;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid white;
+}
+
+.userlist {
+    flex: 1;
+    padding: 20px;
+}
+
+.userlist__user {
+    padding: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+
+}
+
+.userlist__user__avatar {
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
+    border-radius: 18px;
+}
+
+.userlist__user__name {
+    flex-grow: 1;
+    align-self: center;
+}

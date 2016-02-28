@@ -1,6 +1,9 @@
 import {API_URL} from 'settings';
+var token = null;
 
-const token = 'MToxNDU2NDAxMDc0OjE5OTZhYzY2YjQ2ZjgyMzZhNjVjN2Q2ZDE5YWM1YzY2';
+export function setAuthToken(authtoken) {
+    token = authtoken;
+}
 
 function processApiResponse(res) {
     if (res.ok) return res.json();

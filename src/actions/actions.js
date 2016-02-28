@@ -6,48 +6,49 @@ import {subscribeToChannel} from 'sources/faye';
 
 // NOTE:Chat actions
 
-export function fetchMessages(channel) {
+export function fetchMessages(channelId) {
     return dispatch => {
         dispatch({
             type: types.LOAD_MESSAGES
         });
-        return api.fetchMessages(channel).then(
+        return api.fetchMessages(channelId).then(
             data => dispatch({
                 type: types.LOAD_MESSAGES_SUCCESS,
                 data,
-                channel
+                channelId
             })
         )
     }
 }
 
 
-export function sendMessage(chatId, message) {
+export function sendMessage(channelId, message) {
     return dispatch => {
         dispatch({
             type: types.SEND_MESSAGE
         });
-        return api.sendMessage(chatId, message).then(
+        return api.sendMessage(channelId, message).then(
             data => dispatch({
                 type: types.SEND_MESSAGE_SUCCESS,
+                channelId,
                 data
             })
         )
     }
 }
 
-export function deleteMessage(chatId, msgId) {
+export function deleteMessage(channelId, msgId) {
     return dispatch => {
         dispatch({
             type: types.DELETE_MESSAGE
         });
-        return api.deleteMessage(chatId, msgId).then(
+        return api.deleteMessage(channelId, msgId).then(
             data => dispatch({
                 type: types.DELETE_MESSAGE_SUCCESS,
-                chatId,
+                channelId,
                 msgId
             })
-        )
+        );
     }
 }
 
@@ -60,7 +61,11 @@ export function loadAccountInfo() {
         api.fetchAccountInfo().then(
             data => {
                 data.chats.forEach((ch) => {
-                   subscribeToChannel(ch.id) 
+                    dispatch({
+                        type: types.JOIN_CHANNEL,
+                        channelId: ch.id
+                    });
+                    subscribeToChannel(ch.id, dispatch);
                 });
                 return dispatch({
                     type: types.LOAD_ACCOUNT_INFO_SUCCESS,
@@ -68,5 +73,23 @@ export function loadAccountInfo() {
                 });
             }
         );
+    };
+}
+
+export function receiveMessage(channelId, message) {
+    return {
+        type: types.RECEIVE_MESSAGE,
+        channelId: channelId,
+        data: message
+    }   
+}
+
+export function changeChannel(channelId) {
+    return dispatch => {
+        dispatch({
+            type: types.CHANGE_CHANNEL,
+            channelId: channelId
+        });
+        return dispatch(fetchMessages(channelId));
     }
 }

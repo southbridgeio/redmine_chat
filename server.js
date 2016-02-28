@@ -11,8 +11,8 @@ new WebpackDevServer(webpack(config), {
             target: 'http://devlinux/',
             changeOrigin: true
         },
-        '/redmine-chat/*': {
-            target: 'http://devlinux:9292',
+        '/chat/*': {
+            target: 'http://devlinux',
             changeOrigin: true,
             ws: true
         }

@@ -1,20 +1,41 @@
 import React from 'react';
+import Icon from 'react-fa';
 
 import moment from 'moment';
+moment.locale('ru');
 
-import styles from './message.css';
+import styles from 'styles/message.module.css';
 
+class Buttons extends React.Component {
+    render() {
+        return (
+            <div className={styles.header__buttons}>
+                <a href="#" className={styles.header__buttons__button} onClick={this.props.onStarMessage}>
+                    <Icon size="lg" name="star-o"/>
+                </a>
+                <a href="#" className={styles.header__buttons__button} onClick={this.props.onDeleteMessage}>
+                    <Icon size="lg" name="times"/>
+                </a>
+                <a href="#" className={styles.header__buttons__button} onClick={()=>{}}>
+                    <Icon size="lg" name="ellipsis-v"/>
+                </a>
+            </div>
+        )
+    }
+}
 export default class Message extends React.Component {
     render() {
         return (
-            <div className={styles.container}>
-                <div className={styles.date}>{moment(this.props.message.created_at).format("MMM Do")}</div>
-                <div className={styles.time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
-                <h4 className={styles.author}>{this.props.message.name}</h4>
+            <div className={styles.message}>
+                <div className={styles.header}>
+                    <Buttons/>
+                    <div className={styles.header__date}>{moment(this.props.message.created_at).format("DD MMM")}</div>
+                    <div className={styles.header__time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
+                    <div className={styles.header__author}>{this.props.message.name}</div>
+                </div>
                 <div className={styles.text}>
                     {this.props.message.message}
                 </div>
-                <a href="#" onClick={() => this.props.onDeleteMessage(this.props.message.id)}>delete</a>
             </div>
         )
     }

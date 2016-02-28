@@ -1,0 +1,13 @@
+.regular {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+
+.medium {
+    font-family: 'Roboto Medium', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+}
+
+.bold {
+    font-family: 'Roboto Bold', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}

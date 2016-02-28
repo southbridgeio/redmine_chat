@@ -8,13 +8,17 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "faye": "^1.1.2",
+    "file-loader": "^0.8.5",
+    "font-awesome": "^4.5.0",
     "lodash": "^4.5.1",
     "moment": "^2.11.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-fa": "^4.0.0",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-thunk": "^1.0.3",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.13"
   },
   "devDependencies": {

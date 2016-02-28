@@ -1,6 +1,7 @@
 import React from 'react';
 
-import styles from 'styles/chat.css';
+import Icon from 'react-fa';
+import styles from 'styles/chat.module.css';
 
 export default class MessageComposer extends React.Component {
     constructor(props, context) {
@@ -29,8 +30,8 @@ export default class MessageComposer extends React.Component {
     render() {
         return (
             <div className={styles.composer}>
-                <input
-                    className={styles.composer}
+                <textarea
+                    className={styles.composer__textarea}
                     type="textarea"
                     name="message"
                     rows={3}
@@ -41,7 +42,12 @@ export default class MessageComposer extends React.Component {
                     onChange={::this.handleChange}
                     onKeyDown={::this.handleSubmit}
                 />
-                <a href="#">Отправить</a>
+                <div className={styles.composer__buttons}>
+                    <a href="#" className={styles.composer__buttons__invite}>
+                        <Icon size="2x" name="bell-o"/>&nbsp;Позвать в чат
+                    </a>
+                    <a href="#" onClick={::this.handleSubmit} className={styles.composer__buttons__send}>Отправить</a>
+                </div>
             </div>
         );
     }
