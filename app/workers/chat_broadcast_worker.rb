@@ -12,9 +12,12 @@ class ChatBroadcastWorker
                 },
                 ext:     { auth_token: FAYE_TOKEN } }
 
-    uri = URI.parse RedmineChat.chat_url
+    # uri = URI.parse RedmineChat.chat_url
+    #
+    # Net::HTTP.post_form(uri, message: message.to_json)
 
-    Net::HTTP.post_form(uri, message: message.to_json)
+    CHAT_REDIS.publish(channel, { type:    message_type,
+                                  payload: json_data })
   end
 
 end

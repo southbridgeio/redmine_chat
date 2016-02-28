@@ -1,6 +1,8 @@
 resources :chat_messages, only: [:index, :create]
 resources :chats, only: [:index, :show]
-get 'chat_messages/:issue_id/listener' => 'chat_messages#listener'
+get 'chat/:id/listener' => 'chat_messages#listener'
+
+get 'chat/:id/events' => 'chats#events'
 
 namespace :chat_api, path: 'chat-api', format: 'json' do
   resources :chats, only: [:show] do

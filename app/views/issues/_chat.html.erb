@@ -1,91 +1,41 @@
 <div id="ChatApp"></div>
 <%= javascript_include_tag "app.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 
-<% if false and @issue.present? and @project.module_enabled?(:chat) %>
-  <!--<div id="chat-button">-->
-    <!--<div class="header">-->
-      <!--<% if false and @issue.chat_messages.present? %>-->
-        <!--Развернуть чат-->
-      <!--<% else %>-->
-        <!--Начать live-чат-->
-      <!--<% end %>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<span class="chat-message-counter"><%= @issue.chat_messages.count %></span>&ndash;&gt;-->
 
-  <!--</div>-->
-  <div class="container clearfix" id="chat" data-issue-id="<%= @issue.id %>"
-                                            data-current-user-id="<%= User.current.id %>"
-                                            data-chat-url="<%= chat_url %>">
-    <div id="chat-close">
-      <i class="fa fa-close"></i>
-    </div>
-    <div class="people-list" id="people-list">
-      <ul class="list">
-        <% @issue.chat_users.each do |user| %>
-          <li class="clearfix">
-            <%= gravatar_image_tag user.email_address.try(:address) %>
-            <div class="about">
-              <div class="name"><%= user.name %></div>
-              <div class="status">
-                <i class="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li>
-        <% end %>
+<script>
+  <% ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
+  var socket;
+  socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat/" + <%= @issue.id.to_s %> +"/events");
+  socket.onopen = function () {
+    alert("Соединение установлено.");
+  };
 
-      </ul>
-    </div>
+  socket.onclose = function (event) {
+    if (event.wasClean) {
+      alert('Соединение закрыто чисто');
+    } else {
+      alert('Обрыв соединения'); // например, "убит" процесс сервера
+    }
+    alert('Код: ' + event.code + ' причина: ' + event.reason);
+  };
 
-    <div class="chat">
+  socket.onmessage = function (event) {
+    alert("Получены данные " + event.data);
+  };
 
+  socket.onerror = function (error) {
+    alert("Ошибка " + error.message);
+  };
 
-      <div class="chat-history" id="chat-history-<%= @issue.id %>">
-        <ul>
-          <%= render @issue.chat_messages.includes(:user) %>
-        </ul>
+  socket.onopen = function (e) {
+    return console.log('socket opened');
+  };
 
-      </div>
+</script>
 
-      <div class="chat-message clearfix">
-        <%= render 'chat_messages/form' %>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "main.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 
-      </div>
-
-    </div>
-
-  </div>
-
-  <script id="message-template" type="text/x-handlebars-template">
-    <li class="clearfix">
-      <div class="message-data align-right">
-        <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
-        <span class="message-data-name" >{{name}}</span> <i class="fa fa-circle me"></i>
-      </div>
-      <div class="message other-message float-right">
-        {{messageText}}
-      </div>
-    </li>
-  </script>
-
-  <script id="message-response-template" type="text/x-handlebars-template">
-    <li>
-      <div class="message-data">
-        <span class="message-data-name"><i class="fa fa-circle online"></i> {{name}}</span>
-        <span class="message-data-time">{{time}}</span>
-      </div>
-      <div class="message my-message">
-        {{messageText}}
-      </div>
-    </li>
-  </script>
-
-
-  <% content_for :header_tags do %>
-    <%= stylesheet_link_tag "main.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-
-    <%= javascript_include_tag "#{chat_url}.js" %>
-
-  <% end %>
-
+  <!--<%= javascript_include_tag "#{chat_url}.js" %>-->
 
 <% end %>

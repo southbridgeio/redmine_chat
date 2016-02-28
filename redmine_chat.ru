@@ -1,4 +1,6 @@
 require 'faye'
+require 'logger'
+Faye.logger = Logger.new(STDOUT)
 
 require File.expand_path('../lib/redmine_chat/faye_token.rb', __FILE__)
 
