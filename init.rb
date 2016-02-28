@@ -1,9 +1,11 @@
-require 'connection_pool'
-Redis::Objects.redis = ConnectionPool.new(size: 5, timeout: 5) { Redis.new(host: '127.0.0.1', port: 6379) }
+# require 'connection_pool'
+# Redis::Objects.redis = ConnectionPool.new(size: 5, timeout: 5) { Redis.new(host: '127.0.0.1', port: 6379) }
+Redis::Objects.redis = Redis.new
+
 
 require 'msngr/clients/redis'
 
-client    = Msngr::Clients::Redis.new
+client         = Msngr::Clients::Redis.new
 CHAT_MESSENGER = Msngr.new(client).tap(&:listen!)
 CHAT_REDIS     = Redis.new
 

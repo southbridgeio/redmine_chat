@@ -1,24 +1,21 @@
 <div id="ChatApp"></div>
-<%= javascript_include_tag "app.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 
 
 <script>
   <% ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
   var socket;
   socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat/" + <%= @issue.id.to_s %> +"/events");
-  socket.onopen = function () {
-    alert("Соединение установлено.");
-  };
-
-  socket.onclose = function (event) {
-    if (event.wasClean) {
-      alert('Соединение закрыто чисто');
-    } else {
-      alert('Обрыв соединения'); // например, "убит" процесс сервера
-    }
-    alert('Код: ' + event.code + ' причина: ' + event.reason);
-  };
-
+//
+//
+//  socket.onclose = function (event) {
+//    if (event.wasClean) {
+//      alert('Соединение закрыто чисто');
+//    } else {
+//      alert('Обрыв соединения'); // например, "убит" процесс сервера
+//    }
+//    alert('Код: ' + event.code + ' причина: ' + event.reason);
+//  };
+//
   socket.onmessage = function (event) {
     alert("Получены данные " + event.data);
   };
@@ -32,10 +29,3 @@
   };
 
 </script>
-
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag "main.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-
-  <!--<%= javascript_include_tag "#{chat_url}.js" %>-->
-
-<% end %>

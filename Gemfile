@@ -1,8 +1,8 @@
-gem 'redis', '~> 3.2'
+gem 'redis'
 gem 'tubesock'
 gem 'msngr'
 
 gem 'jbuilder'
 
 gem 'redis-objects'
-gem 'connection_pool'
+# gem 'connection_pool'

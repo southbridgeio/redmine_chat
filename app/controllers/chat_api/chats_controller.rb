@@ -22,12 +22,6 @@ class ChatApi::ChatsController < ChatApi::BaseController
 
     ChatBroadcastWorker.perform_async "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
 
-    channel = "chat/#{@issue.id}"
-    message_type = 'user_join'
-    json_data = render_to_string('chat_api/users/public')
-    CHAT_REDIS.publish(channel, { type:    message_type,
-                                  payload: json_data })
-
     render 'chat_api/users/public'
   end
 

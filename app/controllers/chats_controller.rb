@@ -34,6 +34,7 @@ class ChatsController < ApplicationController
     hijack do |websocket|
       receiver = CHAT_MESSENGER.subscribe(channel_name)
       websocket.onopen do
+        puts "SOCKET: #{channel_name} open"
         receiver.on_message do |message|
           puts "Events: #{message}"
           websocket.send_data(message)
