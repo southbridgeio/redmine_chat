@@ -4,7 +4,7 @@
 <script>
   <% ws_protocol = Setting.protocol == 'https' ? 'wss' : 'ws' %>
   var socket;
-  socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat/" + <%= @issue.id.to_s %> +"/events");
+  socket = new WebSocket("<%= ws_protocol %>://" + window.location.host + "/chat/user_events" + "?token=<%= cookies[:chat_token].chomp %>");
 //
 //
 //  socket.onclose = function (event) {
