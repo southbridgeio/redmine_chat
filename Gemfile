@@ -1,8 +1,6 @@
-gem 'redis'
-gem 'tubesock'
-gem 'msngr'
+gem 'faye', require: false
 
 gem 'jbuilder'
 
 gem 'redis-objects'
-# gem 'connection_pool'
+gem 'connection_pool'

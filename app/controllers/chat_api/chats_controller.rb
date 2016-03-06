@@ -20,7 +20,8 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    ChatBroadcastWorker.perform_async @chat.user_ids, "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
+    # ChatBroadcastWorker.perform_async @chat.user_ids, "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
+    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
 
     render 'chat_api/users/public'
   end
@@ -34,7 +35,7 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    ChatBroadcastWorker.perform_async @chat.user_ids, "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
+    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
 
     render 'chat_api/users/public'
   end
@@ -58,6 +59,6 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_ids.delete @chat_user.id
     @chat_user.chat_ids.delete @chat.id
 
-    ChatBroadcastWorker.perform_async user_ids, "chat/#{@issue.id}", 'user_exit', render_to_string('chat_api/chats/show')
+    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_exit', render_to_string('chat_api/chats/show')
   end
 end

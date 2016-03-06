@@ -18,22 +18,22 @@ class ChatApi::UsersController < ChatApi::BaseController
     render :show
   end
 
-  include Tubesock::Hijack
-
-  def events
-    channel_name = "user/#{@chat_user.id}"
-
-    hijack do |websocket|
-      receiver = CHAT_MESSENGER.subscribe(channel_name)
-      websocket.onopen do
-        puts "SOCKET: #{channel_name} open"
-        receiver.on_message do |message|
-          puts "Events: #{message}"
-          websocket.send_data(message)
-        end
-      end
-
-      websocket.onclose { CHAT_MESSENGER.unsubscribe(receiver) }
-    end
-  end
+  # include Tubesock::Hijack
+  #
+  # def events
+  #   channel_name = "user/#{@chat_user.id}"
+  #
+  #   hijack do |websocket|
+  #     receiver = CHAT_MESSENGER.subscribe(channel_name)
+  #     websocket.onopen do
+  #       puts "SOCKET: #{channel_name} open"
+  #       receiver.on_message do |message|
+  #         puts "Events: #{message}"
+  #         websocket.send_data(message)
+  #       end
+  #     end
+  #
+  #     websocket.onclose { CHAT_MESSENGER.unsubscribe(receiver) }
+  #   end
+  # end
 end
