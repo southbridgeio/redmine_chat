@@ -7,9 +7,7 @@ import {setWsToken} from 'sources/faye';
 import App from './app';
 
 
-function initChatFull(token, container, opts) {
-    setAuthToken(token);
-    setWsToken(token);
+function initChatFull(container, opts) {
     console.log("initializing chat");
     const store = configureStore();
     render(
@@ -24,5 +22,5 @@ function initChatFull(token, container, opts) {
 window.__REDMINE_CHAT__ = {
     initChatFull
 }
-
-initChatFull(localStorage.getItem('token'), document.getElementById('ChatApp'))
+console.log('whoop');
+initChatFull( document.getElementById('ChatApp'))

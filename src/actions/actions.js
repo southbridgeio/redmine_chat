@@ -1,5 +1,5 @@
 import API_URL from 'settings';
-import * as types from '../constants/ActionTypes';
+import * as types from 'actionTypes';
 import * as api from 'sources/api';
 
 import {subscribeToChannel} from 'sources/faye';
@@ -32,7 +32,8 @@ export function sendMessage(channelId, message) {
                 type: types.SEND_MESSAGE_SUCCESS,
                 channelId,
                 data
-            })
+            }),
+            err => console.log(error)
         )
     }
 }

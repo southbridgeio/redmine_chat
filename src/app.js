@@ -14,7 +14,7 @@ import Chat from 'containers/ChatContainer';
 class App extends React.Component {
     componentDidMount() {
         const {dispatch} = this.props;
-        subscribeToGlobal(dispatch);
+        //subscribeToGlobal(dispatch);
         dispatch(loadAccountInfo());
     }
     render() {
