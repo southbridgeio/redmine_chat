@@ -14,8 +14,8 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @issue = Issue.find(params[:id])
 
     @chat = Chat.new(@issue.id)
-    @chat_user.name = @user.name
-    @chat_user.email = @user.mail
+    #@chat_user.name = @user.name
+    #@chat_user.email = @user.mail
 
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
@@ -23,7 +23,7 @@ class ChatApi::ChatsController < ChatApi::BaseController
     # ChatBroadcastWorker.perform_async @chat.user_ids, "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
     ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
 
-    render 'chat_api/users/public'
+    render 'chat_api/chats/show'
   end
 
   def guest_join
