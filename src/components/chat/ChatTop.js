@@ -5,7 +5,7 @@ import styles from 'styles/chat.module.css';
 export default class ChatTop extends React.Component {
     render() {
         return (
-            <div className={styles.topbar}></div>
+            <div className={styles.chat__topbar}></div>
         )
     }
 }

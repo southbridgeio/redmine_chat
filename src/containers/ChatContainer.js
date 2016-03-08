@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import ChatTop from 'components/chat/ChatTop';
-
 import MessageList from 'components/chat/MessageList';
 import MessageComposer from 'components/chat/MessageComposer';
 
@@ -28,15 +27,14 @@ class ChatContainer extends React.Component {
         }
         return (
             <div className={styles.chatcontainer}>
-                <div className={styles.chatbox}>
-                    <div className={styles.channel_title}>{this.props.channelTitle}</div>
-                    <MessageList 
-                        channelTitle={this.props.channelTitle}
-                        messages={this.props.messages} 
-                        onDeleteMessage={::this._deleteMessage}
-                    />
-                    <MessageComposer sendMessage={::this._sendMessage}/>
-                </div>
+                <ChatTop/>
+                <div className={styles.channel_title}>{this.props.channelTitle}</div>
+                <MessageList 
+                    channelTitle={this.props.channelTitle}
+                    messages={this.props.messages} 
+                    onDeleteMessage={::this._deleteMessage}
+                />
+                <MessageComposer sendMessage={::this._sendMessage}/>
             </div>
         )
     }

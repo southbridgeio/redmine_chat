@@ -12,10 +12,18 @@ export default class MessageList extends React.Component {
         }
     }
     render() {
-        if (!this.props.messages || !this.props.messages.length) return <div>Нет сообщений</div>;
+        if (!this.props.messages || !this.props.messages.length) return (
+            <div className={styles.messagelist}>
+                <div className={styles.messagelist__empty}>
+                    Нет сообщений
+                </div>
+            </div>
+        );
         return (
             <div className={styles.messagelist} ref='messageList'>
-                {this.props.messages.map((msg) => <Message onDeleteMessage={this.props.onDeleteMessage}message={msg} key={msg.id}/>)}
+                <div>
+                    {this.props.messages.map((msg) => <Message onDeleteMessage={this.props.onDeleteMessage}message={msg} key={msg.id}/>)}
+                </div>
             </div>
         )
     }
