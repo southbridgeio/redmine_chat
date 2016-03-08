@@ -14,6 +14,8 @@ module.exports = {
         extensions: ['', '.js']
     },
     output: {
+        library: '__REDMINE_CHAT__',
+        libraryTarget: 'var',
         path: path.resolve('./assets'),
         filename: 'app.js',
         publicPath: '/assets/'

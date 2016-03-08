@@ -2,12 +2,18 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'store/configureStore';
-import {setAuthToken} from 'sources/api';
-import {setWsToken} from 'sources/faye';
+
+import {joinChannel} from 'actions/actions';
 import App from './app';
 
 
-function initChatFull(container, opts) {
+let methods = {};
+
+methods.joinChat = (chatId) => {
+    console.log("Chat is not initialized");
+}
+
+methods.initChatFull = (container, opts) => {
     console.log("initializing chat");
     const store = configureStore();
     render(
@@ -16,11 +22,12 @@ function initChatFull(container, opts) {
         </Provider>,
         container 
     );
+    methods.joinChat = (chatId) => {
+        store.dispatch(joinChannel(chatId));
+    }
 }
 
 
-window.__REDMINE_CHAT__ = {
-    initChatFull
-}
-console.log('whoop');
-initChatFull( document.getElementById('ChatApp'))
+module.exports = methods; 
+
+methods.initChatFull( document.getElementById('ChatApp'))

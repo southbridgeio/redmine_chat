@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {connect} from 'react-redux';
-import {changeChannel} from 'actions/actions';
+import {changeChannel, leaveChannel} from 'actions/actions';
 
 import SidebarTop from 'components/sidebar/SidebarTop';
 import ChannelList from 'components/sidebar/ChannelList';
@@ -18,6 +18,7 @@ class SidebarContainer extends React.Component {
                 <ChannelList 
                     activeChannel={this.props.activeChannel}
                     onSelectChannel={this.props.onSelectChannel}
+                    onLeaveChannel={this.props.onLeaveChannel}
                     channels={this.props.channels}
                 />
             </div>
@@ -27,14 +28,15 @@ class SidebarContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSelectChannel: (channelId) => dispatch(changeChannel(channelId))
+        onSelectChannel: (channelId) => dispatch(changeChannel(channelId)),
+        onLeaveChannel: (channelId) => dispatch(leaveChannel(channelId))
     }
 }
 const mapStateToProps = (state) => {
     return {
-        users: state.account.channels[state.account.currentChannel].users,
+        users: state.account.currentChannel ? state.chats.channels[state.account.currentChannel].users : [],
         activeChannel: state.account.currentChannel,
-        channels: state.account.channels
+        channels: state.chats.channels
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarContainer);

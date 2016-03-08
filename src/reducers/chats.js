@@ -18,17 +18,22 @@ const initialState = {
 
 export default function messages(state = initialState, action) {
     switch (action.type) {
-        case types.JOIN_CHANNEL:
+        case types.JOIN_CHANNEL_SUCCESS:
             return {...state, 
                 channels: {
                     ...state.channels,
-                    [action.channelId] : {}
+                    [action.channelId] : action.channel 
                 },
                 messages: {
                     ...state.messages,
                     [action.channelId]: []
                 }
             }
+        case types.LEAVE_CHANNEL_SUCCESS:
+            let newState = Object.assign({}, state);
+            delete newState.channels[action.channelId];
+            delete newState.messages[action.channelId];
+            return newState;
 
         case types.RECEIVE_MESSAGE:
             return {...state,

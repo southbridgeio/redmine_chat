@@ -43,3 +43,15 @@ export function deleteMessage(channel, msgId) {
 export function fetchAccountInfo() {
     return makeRequest(`${API_URL}/account`).then(processApiResponse);
 }
+
+export function joinChannel(channelId) {
+    return makeRequest(`${API_URL}/chats/${channelId}/join`,{
+        method: "POST"
+    }).then(processApiResponse);
+}
+
+export function leaveChannel(channelId) {
+    return makeRequest(`${API_URL}/chats/${channelId}/exit`,{
+        method: "POST"
+    }).then(processApiResponse);
+}

@@ -43,7 +43,7 @@ class ChatContainer extends React.Component {
 export default connect((state) => {
     return {
         currentChannel: state.account.currentChannel,
-        channelTitle: state.account.channels[state.account.currentChannel].title,
+        channelTitle: state.account.currentChannel ? state.chats.channels[state.account.currentChannel].title : null,
         messages: state.chats.messages[state.account.currentChannel] || null
     }
 })(ChatContainer);

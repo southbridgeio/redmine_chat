@@ -63,8 +63,9 @@ export function loadAccountInfo() {
             data => {
                 data.chats.forEach((ch) => {
                     dispatch({
-                        type: types.JOIN_CHANNEL,
-                        channelId: ch.id
+                        type: types.JOIN_CHANNEL_SUCCESS,
+                        channelId: ch.id,
+                        channel: ch
                     });
                     subscribeToChannel(ch.id, dispatch);
                 });
@@ -92,5 +93,51 @@ export function changeChannel(channelId) {
             channelId: channelId
         });
         return dispatch(fetchMessages(channelId));
+    }
+}
+
+export function joinChannel(channelId) {
+    return dispatch => {
+        dispatch({
+            type: types.JOIN_CHANNEL,
+            channelId
+        });
+        return api.joinChannel(channelId).then(
+            result => {
+                dispatch({
+                    type: types.JOIN_CHANNEL_SUCCESS,
+                    channelId,
+                    channel: result
+                });
+                subscribeToChannel(channelId, dispatch);
+            },
+            err => dispatch({
+                type: types.JOIN_CHANNEL_FAIL,
+                channelId
+            })
+        );
+    }
+}
+
+export function leaveChannel(channelId) {
+    return dispatch => {
+        dispatch({
+            type: types.LEAVE_CHANNEL,
+            channelId
+        });
+        return api.leaveChannel(channelId).then(
+            result => {
+                dispatch({
+                    type: types.LEAVE_CHANNEL_SUCCESS,
+                    channelId,
+                    result
+                });
+                //unsubscribeFromChannel(channelId, dispatch);
+            },
+            err => dispatch({
+                type: types.LEAVE_CHANNEL_FAIL,
+                channelId
+            })
+        );
     }
 }
