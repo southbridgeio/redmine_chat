@@ -1,3 +1,3 @@
 class ChatHookListener < Redmine::Hook::ViewListener
-  render_on :view_issues_sidebar_issues_bottom, partial: 'issues/chat'
+  render_on :view_layouts_base_body_bottom, partial: 'shared/chat'
 end
