@@ -14,10 +14,15 @@ module ChatApi
           if salt == 'guest'
             @chat_user = ChatUser.new(user_id)
           else
-            render json: {error: 'wrong token'}, status: :unauthorized
+            @user = User.find(user_id)
+            if @user.salt == salt
+              @chat_user = ChatUser.new(user_id)
+            else
+              render json: { error: 'wrong token' }, status: :unauthorized
+            end
           end
         else
-          render json: {error: 'empty token'}, status: :unauthorized
+          render json: { error: 'empty token' }, status: :unauthorized
         end
       end
     end

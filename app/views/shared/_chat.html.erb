@@ -1,22 +1,23 @@
 <% if User.current.admin? %>
   <div id="ChatApp" data-chat-url="<%= RedmineChat.chat_url %>" data-admin="true"></div>
 
-  <% content_for :header_tags do %>
-    <%= stylesheet_link_tag "chat.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-
-    <!-- Если нужно, чтоб js загрузился после дива, то javascript_include_tag нужно разместить за границами блока content_for -->
-
-    <%= javascript_include_tag "chat.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-
-
-    <%= javascript_include_tag "#{RedmineChat.chat_url}.js" %>
-  <% end %>
   <script>
     console.log("Chat: admin");
   </script>
+
 <% elsif @issue.present? %>
   <div id="ChatApp" data-chat-url="<%= RedmineChat.chat_url %>" data-admin="false" data-chat-id="<%= @issue.id %>"></div>
 
+
+  <script>
+    console.log("chatId: <%= @issue.id %>");
+
+  </script>
+
+<% end %>
+
+<% if @issue.present? %>
+  <%= javascript_include_tag "#{RedmineChat.chat_url}.js" %>
 
   <script>
     console.log("chatId: <%= @issue.id %>");
@@ -28,18 +29,14 @@
   </script>
 
   <!--
-    В папке assets/stylesheets должен быть файл chat.css
-    В папке assets/javascripts должен быть файл chat.js
-  -->
-
+   В папке assets/stylesheets должен быть файл chat.css
+   В папке assets/javascripts должен быть файл chat.js
+ -->
   <% content_for :header_tags do %>
     <%= stylesheet_link_tag "chat.css?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
 
     <!-- Если нужно, чтоб js загрузился после дива, то javascript_include_tag нужно разместить за границами блока content_for -->
 
     <%= javascript_include_tag "chat.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
-
-
-    <%= javascript_include_tag "#{RedmineChat.chat_url}.js" %>
   <% end %>
 <% end %>

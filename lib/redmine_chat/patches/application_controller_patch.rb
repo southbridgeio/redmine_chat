@@ -1,11 +1,11 @@
 module RedmineChat
 
-  module IssuesControllerPatch
+  module ApplicationControllerPatch
     def self.included(base) # :nodoc:
       base.class_eval do
         unloadable
 
-        before_action :set_chat_token, only: [:show]
+        before_action :set_chat_token
 
         private
 
@@ -21,4 +21,4 @@ module RedmineChat
 
   end
 end
-IssuesController.send(:include, RedmineChat::IssuesControllerPatch)
+ApplicationController.send(:include, RedmineChat::ApplicationControllerPatch)
