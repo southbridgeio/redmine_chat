@@ -21,9 +21,10 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat_user.join_to_chat @chat.id
 
     # ChatBroadcastWorker.perform_async @chat.user_ids, "chat/#{@issue.id}", 'user_join', render_to_string('chat_api/users/public')
-    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join', JSON.parse(render_to_string('chat_api/users/public'))
+    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join',
+                                      JSON.parse(render_to_string('chat_api/users/public'))
 
-    render 'chat_api/chats/show'
+    render 'chat_api/users/public'
   end
 
   def guest_join
@@ -35,7 +36,8 @@ class ChatApi::ChatsController < ChatApi::BaseController
     @chat.user_join @chat_user.id
     @chat_user.join_to_chat @chat.id
 
-    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join', JSON.parse(render_to_string('chat_api/users/public'))
+    ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'user_join',
+                                      JSON.parse(render_to_string('chat_api/users/public'))
 
     render 'chat_api/users/public'
   end
