@@ -14,7 +14,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
   def create
     @issue                = Issue.find(params[:chat_id])
     @chat                 = Chat.new(@issue.id)
-    @message              = @issue.chat_messages.new(message: params[:message])
+    @message              = @issue.chat_messages.new(message: ERB::Util.html_escape(params[:message]))
     @message.chat_user_id = @chat_user.id
     @message.user_name    = @chat_user.try(:name).try(:value)
 
@@ -32,7 +32,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
     @issue           = Issue.find(params[:chat_id])
     @chat            = Chat.new(@issue.id)
     @message         = @issue.chat_messages.find(params[:id])
-    @message.message = params[:message] if params[:message].present?
+    @message.message = ERB::Util.html_escape(params[:message]) if params[:message].present?
     @message.stared  = params[:stared] if params[:stared].present?
 
     if @message.save
