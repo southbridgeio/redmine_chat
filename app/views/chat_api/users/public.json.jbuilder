@@ -1,4 +1,4 @@
-json.id @chat_user.id
+json.id @chat_user.id.to_s
 json.name @chat_user.name
 
 json.settings do
