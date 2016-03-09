@@ -11,7 +11,7 @@ export default class MessageComposer extends React.Component {
         }
     }
     handleSubmit(ev) {
-        if (ev.which === 13) {
+        if (ev.which === 13 && !ev.shiftKey) {
             ev.preventDefault();
 
             if (this.state.text.length > 0) {

@@ -25,6 +25,9 @@ class Buttons extends React.Component {
 }
 export default class Message extends React.Component {
     render() {
+        function createMarkup(text) {
+            return { __html: text.replace(/\n/g, '<br>') }
+        }
         return (
             <div className={styles.message}>
                 <div className={styles.header}>
@@ -33,9 +36,7 @@ export default class Message extends React.Component {
                     <div className={styles.header__time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
                     <div className={styles.header__author}>{this.props.message.name}</div>
                 </div>
-                <div className={styles.text}>
-                    {this.props.message.message}
-                </div>
+                <div className={styles.text} dangerouslySetInnerHTML={createMarkup(this.props.message.message)}/>
             </div>
         )
     }
