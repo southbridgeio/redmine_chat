@@ -1,0 +1,60 @@
+.sidebar {
+    font-size: 20px;
+    float: left;
+    height: 100%;
+    min-width: 360px;
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+    composes: darkbluebg from 'styles/colors.module.css';
+}
+
+.sidebar__top {
+    line-height: 75px;
+}
+
+.channellist {
+    composes: bluebg from 'styles/colors.module.css';
+}
+
+.channellist__channel {
+    cursor: pointer;
+    position: relative;
+    padding: 45px 45px 35px 45px;
+    border-bottom: 1px solid #7294ba;
+}
+
+.channellist__channel__selection {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0; 
+	height: 0; 
+    margin-top: -8px;
+	border-top: 14px solid transparent;
+	border-bottom: 14px solid transparent;
+	border-left: 18px solid white;
+}
+
+.userlist {
+    padding: 40px 35px;
+    font-size: 20px;
+}
+
+.userlist__user {
+    margin-bottom: 25px;
+
+}
+
+.userlist__user__avatar {
+    display: block;
+    float: left;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+}
+
+.userlist__user__name {
+    margin-top: 5px;
+    margin-left: 61px
+}

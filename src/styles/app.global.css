@@ -1,0 +1,37 @@
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic-ext);
+
+#ChatApp {
+    position: fixed;
+    height: 100%;
+    bottom:0;
+    right:0;
+}
+
+#ChatApp * {
+    box-sizing: border-box;
+}
+
+#ChatApp .minimized {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    position: fixed;
+    bottom: 0;
+    right: 5%;
+    line-height: 30px;
+    padding: 0 30px;
+    background: #3e5a76;
+    color: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#ChatApp .main {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 1000px;
+    box-shadow: -5px 0px 5px gray;
+}
+

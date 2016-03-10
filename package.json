@@ -1,71 +1,38 @@
 {
   "name": "redmine-chat",
-  "version": "0.0.0",
-  "dependencies": {},
+  "version": "0.0.1",
+  "dependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "exports-loader": "^0.6.3",
+    "faye": "^1.1.2",
+    "file-loader": "^0.8.5",
+    "font-awesome": "^4.5.0",
+    "imports-loader": "^0.6.5",
+    "lodash": "^4.5.1",
+    "moment": "^2.11.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-fa": "^4.0.0",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
+    "redux-thunk": "^1.0.3",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.13",
+    "whatwg-fetch": "^0.11.0"
+  },
   "devDependencies": {
-    "babelify": "^6.1.3",
-    "base64-js": "^1.0.2",
-    "browser-sync": "^2.2.3",
-    "browserify": "latest",
-    "browserify-shim": "^3.8.0",
-    "del": "~0.1.3",
-    "gulp": "^3.8.11",
-    "gulp-autoprefixer": "^2.1.0",
-    "gulp-cache": "~0.2.4",
-    "gulp-imagemin": "^2.2.1",
-    "gulp-jshint": "~1.8.5",
-    "gulp-load-plugins": "~0.7.0",
-    "gulp-minify-css": "^1.0.0",
-    "gulp-rigger": "^0.5.8",
-    "gulp-sass": "^2.2.0",
-    "gulp-size": "~1.1.0",
-    "gulp-sourcemaps": "^1.5.0",
-    "gulp-strip-debug": "^1.0.2",
-    "gulp-uglify": "^1.1.0",
-    "gulp-useref": "~0.4.4",
-    "gulp-util": "~3.0.1",
-    "gulp-watch": "^4.1.1",
-    "gulp-webserver": "latest",
-    "main-bower-files": "~2.6.2",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-tools": "latest",
-    "reactify": "latest",
-    "rimraf": "^2.3.1",
-    "strip-debug": "^1.0.1",
-    "trim": "0.0.1",
-    "vinyl-source-stream": "^1.0.0",
-    "watchify": "~2.1"
+    "babel-polyfill": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
-    ]
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim",
-      [
-        "babelify",
-        {
-          "ignore": [
-            "bower_components"
-          ]
-        }
-      ]
-    ]
-  },
-  "browser": {
-    "jquery": "./app/bower_components/jquery/dist/jquery.js"
-  },
-  "browserify-shim": {
-    "jquery": "$"
   }
 }

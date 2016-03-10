@@ -1,0 +1,59 @@
+.message {
+    position: relative;
+    width: 100%;
+    padding: 30px 20px 25px;
+}
+
+.message:hover {
+    box-shadow: 2px 2px 20px #ddd;
+}
+.message:hover .header__time {
+    display: none;
+}
+
+.message:hover .header__buttons {
+    display: block;
+}
+
+.header__buttons {
+    display: none;
+    padding: 10px;
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+.header__buttons__button {
+    color: #a3a3a3;
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+}
+
+.header__buttons__button:hover {
+    color: #6288b2;
+}
+
+.header__date {
+    composes: bold from 'styles/fonts.module.css';
+    font-size: 14px;
+    color: #bacde1;
+    text-transform: uppercase;
+}
+
+.header__author {
+    composes: medium from 'styles/fonts.module.css';
+    margin: 10px 0 20px;
+    font-size: 25px;
+}
+
+.header__time {
+    float: right;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #bacde1;
+}
+
+.text {
+    font-size: 19px;
+}
