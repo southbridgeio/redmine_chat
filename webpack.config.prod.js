@@ -16,9 +16,9 @@ module.exports = {
     output: {
         library: '__REDMINE_CHAT__',
         libraryTarget: 'var',
-        path: path.resolve('./assets/javascripts/'),
-        filename: 'app.js',
-        publicPath: '/assets/'
+        path: path.resolve('./assets/'),
+        filename: 'javascripts/chat.js',
+        publicPath: '/plugin_assets/redmine_chat/'
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
@@ -27,7 +27,7 @@ module.exports = {
             debug: false
         }),
         new webpack.optimize.DedupePlugin(),
-        new ExtractTextPlugin('../stylesheets/chat.css', {
+        new ExtractTextPlugin('./stylesheets/chat.css', {
             allChunks: true
         }),
         new webpack.ProvidePlugin({
@@ -58,11 +58,11 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&minetype=application/font-woff'
+                loader: 'url-loader?limit=10000&minetype=application/font-woff&name=fonts/[name].[ext]'
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader'
+                loader: 'file-loader?name=fonts/[name].[ext]'
             }
         ]
     }
