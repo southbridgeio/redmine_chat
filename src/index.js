@@ -29,5 +29,3 @@ methods.initChatFull = (container, opts) => {
 
 
 module.exports = methods; 
-
-methods.initChatFull( document.getElementById('ChatApp'))

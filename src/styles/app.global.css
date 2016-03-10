@@ -28,6 +28,7 @@
 
 #ChatApp .main {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    background: white;
     bottom: 0;
     right: 0;
     height: 100%;

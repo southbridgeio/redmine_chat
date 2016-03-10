@@ -1,6 +1,9 @@
 {
   "name": "redmine-chat",
   "version": "0.0.1",
+  "scripts": {
+      "build": "NODE_ENV=production webpack --config ./webpack.config.prod.js && echo 'Now run rake redmine:plugins:migrate'"
+  },
   "dependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",
@@ -8,6 +11,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
     "faye": "^1.1.2",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
@@ -21,15 +25,15 @@
     "redux": "^3.3.1",
     "redux-thunk": "^1.0.3",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.13",
+    "webpack": "^2.1.0-beta.4",
     "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "babel-polyfill": "^6.5.0",
+    "babel-preset-es2015-native-modules": "^6.6.0",
     "css-loader": "^0.23.1",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
   },
   "engines": {
