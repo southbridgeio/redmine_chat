@@ -7,6 +7,10 @@ const initialState = {
 
 export default function messages(state = initialState, action) {
     switch (action.type) {
+        case types.LEAVE_CHANNEL_SUCCESS:
+            return {...state,
+                currentChannel: action.channelId == state.currentChannel ? null : state.currentChannel
+            }
         case types.CHANGE_CHANNEL:
             return {...state,
                 currentChannel: action.channelId

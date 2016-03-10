@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as types from 'actionTypes';
 
 function unique(arr) {
@@ -69,9 +70,29 @@ export default function messages(state = initialState, action) {
             };
         case types.DELETE_MESSAGE_SUCCESS:
             return {...state,
-                data: state.data.filter((m) => m.id !== action.msgId)
+                messages: {...state.messages,
+                    [action.channelId] : _.without(state.messages[action.channelId], action.msgId)
+                }
             };
 
+        case types.USER_JOIN:
+            if (!state.channels[action.channelId]) return state;
+            return {...state,
+                channels: {...state.channels,
+                    [action.channelId] : {...state.channels[action.channelId],
+                        users: state.channels[action.channelId].users.concat([action.user])
+                    }
+                }
+            }
+        case types.USER_LEAVE:
+            if (!state.channels[action.channelId]) return state;
+            return {...state,
+                channels: {...state.channels,
+                    [action.channelId] : {...state.channels[action.channelId],
+                        users: state.channels[action.channelId].users.filter(u => u.id != action.userId)
+                    }
+                }
+            }
         default:
             return state;
     }
