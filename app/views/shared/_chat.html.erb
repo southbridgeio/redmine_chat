@@ -1,40 +1,28 @@
+<div id="ChatApp"></div>
 <% if User.current.admin? %>
-  <div id="ChatApp" data-chat-url="<%= RedmineChat.chat_url %>" data-admin="true"></div>
 
   <script>
-    console.log("Chat: admin");
-  </script>
+  
+  // Load chat script and then call init function
 
-<% elsif @issue.present? %>
-  <div id="ChatApp" data-chat-url="<%= RedmineChat.chat_url %>" data-admin="<%= User.current.admin? %>" data-chat-id="<%= @issue.id %>">
-    <button onclick="__REDMINE_CHAT__.joinChat(id)">войти в чат</button>
+  var script = document.createElement('script');
 
-  </div>
+  if(script.readyState) {  // IE
+      script.onreadystatechange = function() {
+          if ( script.readyState === "loaded" || script.readyState === "complete"  ) {
+              script.onreadystatechange = null;
+              __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
+          }
+      };
+  } else{ // others
+      script.onload = function() {
+          __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
+      }
+  }
 
-
-  <script>
-    console.log("chatId: <%= @issue.id %>");
-
+  // TODO: change script path to generate by redmine instead of hardcoded one
+  script.src = "/plugin_assets/redmine_chat/javascripts/app.js";
+  document.documentElement.appendChild(script);
   </script>
 
 <% end %>
-
-<% if @issue.present? %>
-  <%= javascript_include_tag "#{RedmineChat.chat_url}.js" %>
-
-  <script>
-    console.log("chatId: <%= @issue.id %>");
-    var client = new Faye.Client('<%= RedmineChat.chat_url %>');
-
-    client.subscribe('/chat/<%= @issue.id %>', function (message) {
-      console.log(message);
-    });
-  </script>
-
-
-<% end %>
-<!--
- В папке assets/javascripts должен быть файл chat.js
--->
-
-<%= javascript_include_tag "chat.js?#{RedmineChat.commit_hash}", plugin: 'redmine_chat' %>
