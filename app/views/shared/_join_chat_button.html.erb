@@ -1,0 +1,3 @@
+<% if User.current.admin? %>
+<button onclick="javascript:__REDMINE_CHAT__ ? __REDMINE_CHAT__.joinChat(<%= @issue.id %>) : alert('Чат не инициализирован')">Войти в чат</button>
+<% end %>
