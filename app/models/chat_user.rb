@@ -34,4 +34,12 @@ class ChatUser
     end
   end
 
+  def as_json
+    {
+      id: id,
+      name: name,
+      email: email
+    }
+  end
+
 end

@@ -1,10 +1,11 @@
 module ChatApi
-  class BaseController < ApplicationController
+  class BaseController < ActionController::Base
     before_filter :authorize
 
     private
 
     def authorize
+      # binding.pry
       if session[:user_id]
         # user is authenticated
         @chat_user = ChatUser.new(session[:user_id])
@@ -25,6 +26,15 @@ module ChatApi
           render json: { error: 'empty token' }, status: :unauthorized
         end
       end
+      set_user_name(@chat_user.id) unless @chat_user.name.value.present?
+      # puts @chat_user.as_json
+    end
+
+    def set_user_name(user_id)
+      @user = User.find(user_id)
+      @chat_user = ChatUser.new(user_id)
+      @chat_user.name = @user.name
+      @chat_user.email = @user.mail
     end
   end
 end
