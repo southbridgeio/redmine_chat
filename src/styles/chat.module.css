@@ -6,11 +6,18 @@
 }
 
 .chat__topbar {
+    position: relative;
     height: 80px;
     flex: 0 0 auto;
     composes: darkbluebg from 'styles/colors.module.css';
 }
 
+.chat__topbar__close {
+    position: absolute;
+    cursor: pointer;
+    right: 15px;
+    top: 15px;
+}
 
 .channel_title {
     composes: medium from 'styles/fonts.module.css';
