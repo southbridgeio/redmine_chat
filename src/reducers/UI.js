@@ -11,6 +11,7 @@ export default function(state=initialState, action) {
             ...state,
             minimized: true
         }
+    case types.CHANGE_CHANNEL:
     case types.MAXIMIZE_CHAT:
         return {
             ...state,
