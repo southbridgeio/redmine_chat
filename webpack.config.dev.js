@@ -10,8 +10,10 @@ module.exports = {
         './src/index'
     ],
     resolve: {
-        root: path.resolve('./src'),
-        extensions: ['', '.js']
+        modules: [
+            path.resolve('./src'),
+            'node_modules'
+        ]
     },
     output: {
         library: '__REDMINE_CHAT__',
@@ -37,7 +39,8 @@ module.exports = {
             {
                 test: /\.js$/,
                 loaders: ['react-hot', 'babel'],
-                include: path.join(__dirname, 'src')
+                include: path.join(__dirname, 'src'),
+                exclude: 'node_modules'
             },
             {
                 test: /^((?!\.module).)*css$/,
