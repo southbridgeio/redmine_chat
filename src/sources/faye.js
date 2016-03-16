@@ -9,7 +9,7 @@ export function subscribeToChannel(channelId, dispatch) {
         switch (message.type) {
         case "message_new":
             dispatch({
-                type: types.SEND_MESSAGE_SUCCESS,
+                type: types.RECEIVE_MESSAGE,
                 channelId: message.payload.chat_id,
                 data: message.payload
             });

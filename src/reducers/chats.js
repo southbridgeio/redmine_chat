@@ -42,6 +42,7 @@ export default function messages(state = initialState, action) {
                     [action.channelId]: unique([...state.messages[action.channelId], action.data], (el) => el.id)
                 }
             }
+        case types.RECEIVE_MESSAGE:
         case types.SEND_MESSAGE_SUCCESS:
             return {...state,
                 messages: {...state.messages,

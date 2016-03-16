@@ -63,6 +63,10 @@ module.exports = {
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'file-loader?name=fonts/[name].[ext]'
+            },
+            {
+                test: /\.(mp3)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader?name=sounds/[name].[ext]'
             }
         ]
     }
