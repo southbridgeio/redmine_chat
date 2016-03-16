@@ -16,7 +16,6 @@ class Channel extends React.Component {
 
 export default class ChannelList extends React.Component {
     render() {
-        console.log(this.props.channels);
         return (
             <div className={styles.channellist}>
                 {Object.keys(this.props.channels).map((id) => {
