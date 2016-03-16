@@ -2,6 +2,7 @@ import API_URL from 'settings';
 import * as types from 'actionTypes';
 import * as api from 'sources/api';
 
+import { maximizeChat } from 'actions/UI';
 import {subscribeToChannel} from 'sources/faye';
 
 // NOTE:Chat actions
@@ -110,6 +111,8 @@ export function joinChannel(channelId) {
                     channel: result
                 });
                 subscribeToChannel(channelId, dispatch);
+                dispatch(changeChannel(channelId));
+                dispatch(maximizeChat());
             },
             err => dispatch({
                 type: types.JOIN_CHANNEL_FAIL,

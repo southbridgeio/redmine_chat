@@ -17,7 +17,7 @@ class App extends React.Component {
         //subscribeToGlobal(dispatch);
     }
     render() {
-        if (!this.props.loaded) return null;
+        if (!(this.props.loaded && this.props.channelsCount > 0)) return null;
         if (this.props.isMinimized) {
             return (
                 <div className="minimized" onClick={this.props.maximize}>
@@ -49,6 +49,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
+        channelsCount: Object.keys(state.chats.channels).length,
         loaded: state.account.loaded,
         isMinimized: state.UI.minimized
     }
