@@ -32,6 +32,7 @@ class ChatContainer extends React.Component {
                 <ChatTop onMinimize={this.props.minimizeChat}/>
                 <div className={styles.channel_title}>{this.props.channelTitle}</div>
                 <MessageList 
+                    channelLastVisited={this.props.channelLastVisited}
                     channelTitle={this.props.channelTitle}
                     messages={this.props.messages} 
                     onDeleteMessage={::this._deleteMessage}
@@ -46,6 +47,7 @@ const mapStateToProps = state => {
     return {
         currentChannel: state.account.currentChannel,
         channelTitle: state.account.currentChannel ? state.chats.channels[state.account.currentChannel].title : null,
+        channelLastVisited: state.account.currentChannel ? new Date(state.chats.channels[state.account.currentChannel].last_visited_at).getTime() : null,
         messages: state.chats.messages[state.account.currentChannel] || null
     }
 }

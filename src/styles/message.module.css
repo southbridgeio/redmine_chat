@@ -47,11 +47,22 @@
     font-size: 25px;
 }
 
+.header__author_unread {
+    composes: header__author;
+    color: #f2991a;
+}
+
+
 .header__time {
     float: right;
     margin-top: 15px;
     font-size: 14px;
     color: #bacde1;
+}
+
+.header__time_unread {
+    composes: header__time;
+    color: #f2991a;
 }
 
 .text {

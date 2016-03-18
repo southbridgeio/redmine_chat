@@ -24,19 +24,22 @@ class Buttons extends React.Component {
     }
 }
 export default class Message extends React.Component {
+    _isUnread() {
+        return new Date(this.props.message.created_at).getTime() > this.props.channelLastVisited;
+    }
+    _createMarkup(text) {
+        return { __html: text.replace(/\n/g, '<br>') }
+    }
     render() {
-        function createMarkup(text) {
-            return { __html: text.replace(/\n/g, '<br>') }
-        }
         return (
             <div className={styles.message}>
                 <div className={styles.header}>
                     <Buttons/>
                     <div className={styles.header__date}>{moment(this.props.message.created_at).format("DD MMM")}</div>
-                    <div className={styles.header__time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
-                    <div className={styles.header__author}>{this.props.message.name}</div>
+                    <div className={this._isUnread() ? styles.header__time_unread : styles.header__time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
+                    <div className={this._isUnread() ? styles.header__author_unread : styles.header__author}>{this.props.message.name}</div>
                 </div>
-                <div className={styles.text} dangerouslySetInnerHTML={createMarkup(this.props.message.message)}/>
+                <div className={styles.text} dangerouslySetInnerHTML={this._createMarkup(this.props.message.message)}/>
             </div>
         )
     }

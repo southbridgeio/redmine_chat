@@ -22,7 +22,7 @@ export default class MessageList extends React.Component {
         return (
             <div className={styles.messagelist} ref='messageList'>
                 <div>
-                    {this.props.messages.map((msg) => <Message onDeleteMessage={this.props.onDeleteMessage}message={msg} key={msg.id}/>)}
+                    {this.props.messages.map((msg) => <Message channelLastVisited={this.props.channelLastVisited} onDeleteMessage={this.props.onDeleteMessage}message={msg} key={msg.id}/>)}
                 </div>
             </div>
         )
