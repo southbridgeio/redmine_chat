@@ -1,7 +1,18 @@
 import React from 'react';
 import Icon from 'react-fa';
 
+import { MESSAGES_ON_PAGE } from 'settings';
+
 import styles from 'styles/sidebar.module.css';
+
+class UnreadCount extends React.Component {
+    render() {
+        if (this.props.count === 0) return null
+        return (
+            <span className={styles.channellist__channel__unread}>{this.props.count >= MESSAGES_ON_PAGE ? '20+' : this.props.count}</span>
+        )
+    }
+}
 
 class Channel extends React.Component {
     render() {
@@ -9,6 +20,8 @@ class Channel extends React.Component {
             <div className={styles.channellist__channel}>
                 {(this.props.isActive) ? <div className={styles.channellist__channel__selection}></div> : null }
                 <span onClick={this.props.onSelect}>{this.props.channel.title}</span>
+                
+                <UnreadCount count={this.props.channel.unreadCount}/>
                 <div className={styles.channellist__channel__leave}>
                     <Icon className={styles.channellist__channel__leave__icon} onClick={this.props.onLeave}name="power-off"/>
                 </div>

@@ -11,6 +11,13 @@ function unique(arr) {
         return memo;
     }, []);
 }
+
+function getUnreadCount(lastVisited, messages) {
+    lastVisited = new Date(lastVisited).getTime();
+    return messages.filter(msg => {
+        return new Date(msg.created_at).getTime() > lastVisited;
+    }).length;
+}
 const initialState = {
     loaded: false,
     channels: {},
@@ -57,6 +64,13 @@ export default function messages(state = initialState, action) {
             return {...state,
                 loading: false,
                 loaded: true,
+                channels: {
+                    ...state.channels,
+                    [action.channelId]: {
+                        ...state.channels[action.channelId],
+                        unreadCount: getUnreadCount(state.channels[action.channelId].last_visited_at, action.data.messages)
+                    }
+                },
                 messages: {
                     ...state.messages,
                     [action.channelId]: action.data.messages.reverse()

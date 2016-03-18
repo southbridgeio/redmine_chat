@@ -23,6 +23,16 @@
     border-bottom: 1px solid #7294ba;
 }
 
+.channellist__channel__unread {
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 15px;
+    background: #f2991a;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 10px;
+}
+
 .channellist__channel__selection {
     position: absolute;
     top: 50%;
