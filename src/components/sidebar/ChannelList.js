@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'react-fa';
 
 import styles from 'styles/sidebar.module.css';
 
@@ -8,7 +9,9 @@ class Channel extends React.Component {
             <div className={styles.channellist__channel}>
                 {(this.props.isActive) ? <div className={styles.channellist__channel__selection}></div> : null }
                 <span onClick={this.props.onSelect}>{this.props.channel.title}</span>
-                <span onClick={this.props.onLeave}>X</span>
+                <div className={styles.channellist__channel__leave}>
+                    <Icon className={styles.channellist__channel__leave__icon} onClick={this.props.onLeave}name="power-off"/>
+                </div>
             </div>
         )
     }

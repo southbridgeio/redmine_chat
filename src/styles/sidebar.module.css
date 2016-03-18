@@ -18,7 +18,6 @@
 }
 
 .channellist__channel {
-    cursor: pointer;
     position: relative;
     padding: 45px 45px 35px 45px;
     border-bottom: 1px solid #7294ba;
@@ -34,6 +33,28 @@
 	border-top: 14px solid transparent;
 	border-bottom: 14px solid transparent;
 	border-left: 18px solid white;
+}
+
+.channellist__channel__leave {
+    display: none;
+    position: absolute;
+    width: 45px;
+    height: 100%;
+    top: 0;
+    right:0;
+    border-left: 1px solid #7294ba;
+}
+
+.channellist__channel__leave__icon {
+    cursor: pointer;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.channellist__channel:hover .channellist__channel__leave {
+    display: block;
 }
 
 .userlist {
