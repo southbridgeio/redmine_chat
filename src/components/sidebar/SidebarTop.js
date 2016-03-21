@@ -7,9 +7,9 @@ export default class SidebarTop extends React.Component {
     render() {
         return (
             <div className={styles.sidebar__top}>
-                    <Icon name="power-off" size="2x"/>
+                    <Icon className={styles.sidebar__top__button} name="power-off" size="2x"/>
                     &nbsp;
-                    <Icon name="volume-off" size="2x"/>
+                    <Icon className={styles.sidebar__top__button} name="volume-off" size="2x"/>
             </div>
         )
     }

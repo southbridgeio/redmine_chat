@@ -10,7 +10,12 @@
 }
 
 .sidebar__top {
-    line-height: 75px;
+    padding: 25px;
+}
+
+.sidebar__top__button {
+    margin-right: 30px;
+    cursor: pointer;
 }
 
 .channellist {

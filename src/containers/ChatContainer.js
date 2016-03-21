@@ -11,9 +11,6 @@ import { minimizeChat } from 'actions/UI';
 import styles from 'styles/chat.module.css';
 
 class ChatContainer extends React.Component {
-    componentWillMount() {
-        this.props.fetchMessages();
-    }
     _deleteMessage(msgId) {
         const {dispatch} = this.props;
         dispatch(actions.deleteMessage(this.props.currentChannel, msgId));
@@ -35,7 +32,8 @@ class ChatContainer extends React.Component {
                     channelLastVisited={this.props.channelLastVisited}
                     channelTitle={this.props.channelTitle}
                     messages={this.props.messages} 
-                    onDeleteMessage={::this._deleteMessage}
+                    onStarMessage={this.props.starMessage}
+                    onDeleteMessage={this.props.deleteMessage}
                 />
                 <MessageComposer sendMessage={this.props.sendMessage}/>
             </div>
@@ -66,6 +64,17 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         sendMessage: (message) => {
             if (stateProps.currentChannel !== null ) {
                 return dispatchProps.sendMessage(stateProps.currentChannel, message);
+            }
+        },
+        starMessage: (msgId) => {
+            if (stateProps.currentChannel !== null) {
+                return dispatchProps.updateMessage(
+                    stateProps.currentChannel, 
+                    msgId,
+                    {
+                        stared: !stateProps.messages[msgId].stared
+                    }
+                );
             }
         }
     });

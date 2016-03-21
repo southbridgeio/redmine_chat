@@ -13,9 +13,8 @@ function unique(arr) {
 }
 
 function getUnreadCount(lastVisited, messages) {
-    lastVisited = new Date(lastVisited).getTime();
-    return messages.filter(msg => {
-        return new Date(msg.created_at).getTime() > lastVisited;
+    return _.filter(messages, msg => {
+        return msg.created_at > lastVisited;
     }).length;
 }
 const initialState = {
@@ -25,41 +24,56 @@ const initialState = {
 };
 
 export default function messages(state = initialState, action) {
+    let newState;
     switch (action.type) {
         case types.JOIN_CHANNEL_SUCCESS:
             return {...state, 
                 channels: {
                     ...state.channels,
-                    [action.channelId] : action.channel 
+                    [action.channelId] : {
+                        ...action.channel,
+                        totalMessages: 0,
+                        loadedMessages: 0
+                    }
                 },
                 messages: {
                     ...state.messages,
-                    [action.channelId]: []
+                    [action.channelId]: {}
                 }
             }
+
         case types.LEAVE_CHANNEL_SUCCESS:
-            let newState = Object.assign({}, state);
+            newState = Object.assign({}, state);
             delete newState.channels[action.channelId];
             delete newState.messages[action.channelId];
             return newState;
+        break;
 
         case types.RECEIVE_MESSAGE:
-            return {...state,
-                messages: {...state.messages,
-                    [action.channelId]: unique([...state.messages[action.channelId], action.data], (el) => el.id)
-                }
-            }
-        case types.RECEIVE_MESSAGE:
         case types.SEND_MESSAGE_SUCCESS:
-            return {...state,
+            newState = {...state,
                 messages: {...state.messages,
-                    [action.channelId]: unique([...state.messages[action.channelId], action.data], el => el.id)
+                    [action.channelId]: {
+                        ...state.messages[action.channelId],
+                        [action.data.id]:  action.data
+                    }
+                },
+                channels: { ...state.channels,
+                    [action.channelId]: {
+                        ...state.channels[action.channelId],
+                        totalMessages: state.channels[action.channelId].totalMessages++,
+                        loadedMessages: state.channels[action.channelId].loadedMessages++
+                    }
                 }
             }
+            newState.channels[action.channelId].unreadCount = getUnreadCount(newState.channels[action.channelId].last_visited_at, newState.messages[action.channelId]);
+            return newState;
+
         case types.LOAD_MESSAGES:
             return {...state,
                 loading: true
             };
+
         case types.LOAD_MESSAGES_SUCCESS:
             return {...state,
                 loading: false,
@@ -68,21 +82,33 @@ export default function messages(state = initialState, action) {
                     ...state.channels,
                     [action.channelId]: {
                         ...state.channels[action.channelId],
-                        unreadCount: getUnreadCount(state.channels[action.channelId].last_visited_at, action.data.messages)
+                        unreadCount: getUnreadCount(state.channels[action.channelId].last_visited_at, action.data.messages),
+                        loadedMessages: action.data.messages.length,
+                        totalMessages: action.data.total
                     }
                 },
                 messages: {
                     ...state.messages,
-                    [action.channelId]: action.data.messages.reverse()
+                    [action.channelId]: _.indexBy(action.data.messages, 'id')
                 }
             };
+
         case types.LOAD_MESSAGES_FAIL:
             return {...state,
                 loading: false,
                 loaded: false,
                 error: action.error,
-                data: [...state.data]
             };
+
+        case types.UPDATE_MESSAGE_SUCCESS:
+            return {...state,
+                messages: {...state.messages,
+                    [action.channelId]: {...state.messages[action.channelId],
+                        [action.msgId]: Object.assign({}, state.messages[action.channelId][action.msgId], action.data)
+                    }
+                }
+            }
+
         case types.DELETE_MESSAGE_SUCCESS:
             return {...state,
                 messages: {...state.messages,
@@ -99,6 +125,7 @@ export default function messages(state = initialState, action) {
                     }
                 }
             }
+
         case types.USER_LEAVE:
             if (!state.channels[action.channelId]) return state;
             return {...state,
@@ -108,6 +135,19 @@ export default function messages(state = initialState, action) {
                     }
                 }
             }
+
+
+        case types.UPDATE_CHANNEL_LAST_VISITED_SUCCESS:
+            return {...state,
+                channels: {...state.channels,
+                    [action.channelId]: {...state.channels[action.channelId],
+                        last_visited_at: action.data.last_visited_at,
+                        unreadCount: getUnreadCount(action.data.last_visited_at, state.messages[action.channelId])
+                        
+                    }
+                }                
+            }
+
         default:
             return state;
     }

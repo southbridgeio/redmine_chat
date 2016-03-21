@@ -20,7 +20,7 @@ function processApiResponse(res) {
     throw new Error('Unable to process API response');
 };
 
-export function fetchMessages(channel) {
+export function fetchMessages(channel, options) {
     return makeRequest(`${API_URL}/chats/${channel}/messages`).then(processApiResponse);
 };
 
@@ -39,6 +39,12 @@ export function deleteMessage(channel, msgId) {
     }).then(processApiResponse);
 }
 
+export function updateMessage(channel, msgId, message) {
+    return makeRequest(`${API_URL}/chats/${channel}/messages/${msgId}`, {
+        method: 'PUT',
+        body: JSON.stringify(message)
+    }).then(processApiResponse);
+}
 
 export function fetchAccountInfo() {
     return makeRequest(`${API_URL}/account`).then(processApiResponse);
@@ -53,5 +59,11 @@ export function joinChannel(channelId) {
 export function leaveChannel(channelId) {
     return makeRequest(`${API_URL}/chats/${channelId}/exit`,{
         method: "POST"
+    }).then(processApiResponse);
+}
+
+export function updateChannelLastVisited(channelId) {
+    return makeRequest(`${API_URL}/account/update_last_visited?chat_id=${channelId}`, {
+        method: 'PUT'
     }).then(processApiResponse);
 }

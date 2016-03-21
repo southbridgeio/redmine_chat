@@ -29,11 +29,18 @@ export function sendMessage(channelId, message) {
             type: types.SEND_MESSAGE
         });
         return api.sendMessage(channelId, message).then(
-            data => dispatch({
-                type: types.SEND_MESSAGE_SUCCESS,
-                channelId,
-                data
-            }),
+            data => {
+                dispatch({
+                    type: types.SEND_MESSAGE_SUCCESS,
+                    channelId,
+                    data
+                });
+                dispatch({
+                    type: types.UPDATE_CHANNEL_LAST_VISITED_SUCCESS,
+                    channelId,
+                    data: { last_visited_at: data.created_at }
+                })
+            },
             err => console.log(error)
         )
     }
@@ -54,6 +61,21 @@ export function deleteMessage(channelId, msgId) {
     }
 }
 
+export function updateMessage(channelId, msgId, message) {
+    return dispatch => {
+        dispatch({
+            type: types.UPDATE_MESSAGE
+        });
+        return api.updateMessage(channelId, msgId, message).then(
+            data => dispatch({
+                type: types.UPDATE_MESSAGE_SUCCESS,
+                channelId,
+                msgId,
+                data: message
+            })
+        )
+    } 
+}
 
 export function loadAccountInfo() {
     return dispatch => {
@@ -68,6 +90,7 @@ export function loadAccountInfo() {
                         channelId: ch.id,
                         channel: ch
                     });
+                    dispatch(fetchMessages(ch.id));
                     subscribeToChannel(ch.id, dispatch);
                 });
                 return dispatch({
@@ -89,11 +112,10 @@ export function receiveMessage(channelId, message) {
 
 export function changeChannel(channelId) {
     return dispatch => {
-        dispatch({
+        return dispatch({
             type: types.CHANGE_CHANNEL,
             channelId: channelId
         });
-        return dispatch(fetchMessages(channelId));
     }
 }
 
@@ -110,6 +132,7 @@ export function joinChannel(channelId) {
                     channelId,
                     channel: result
                 });
+                dispatch(fetchMessages(channelId));
                 subscribeToChannel(channelId, dispatch);
                 dispatch(changeChannel(channelId));
                 dispatch(maximizeChat());
@@ -144,3 +167,22 @@ export function leaveChannel(channelId) {
         );
     }
 }
+
+export function updateChannelLastVisited(channelId) {
+    return dispatch => {
+        dispatch({
+            type: types.UPDATE_CHANNEL_LASTVISITED
+        });
+        return api.updateChannelLastVisited(channelId).then(
+            data => dispatch({
+                type: types.UPDATE_CHANNEL_LASTVISITED_SUCCESS,
+                data
+            }),
+            err => dispatch({
+                type: types.UPDATE_CHANNEL_LASTVISITED_FAIL,
+                err
+            })
+        )
+    }
+}
+
