@@ -19,7 +19,7 @@ class ChatMessage < ActiveRecord::Base
     {
       id: id,
       chat_id: issue_id,
-      created_at: created_at,
+      created_at: created_at.to_i,
       name: user_name,
       message: message
     }

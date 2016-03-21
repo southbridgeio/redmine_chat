@@ -28,7 +28,7 @@ class ChatUser
         active:          !issue.closed?,
         archive:         issue.closed?,
         shared_key:      issue.chat_shared_key,
-        last_visited_at: Time.zone.at(time_int),
+        last_visited_at: time_int,
         users:           chat.users
       }
     end
