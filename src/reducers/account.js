@@ -1,13 +1,13 @@
 import * as types from 'actionTypes';
 
-const initialState = {
+export const accountInitialState = {
     loaded: false,
     settings: {
         notificationsEnabled: window.localStorage ? (window.localStorage.getItem('notificationsEnabled')) : true
     }
 };
 
-export default function messages(state = initialState, action) {
+export default function account(state = accountInitialState, action) {
     switch (action.type) {
         case types.LOAD_ACCOUNT_INFO_SUCCESS:
             return {...state,

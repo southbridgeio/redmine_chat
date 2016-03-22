@@ -17,7 +17,7 @@ function getUnreadCount(lastVisited, messages) {
         return msg.created_at > lastVisited;
     }).length;
 }
-const initialState = {
+export const chatsInitialState = {
     loaded: false,
     channels: {},
     messages: {},
@@ -28,7 +28,7 @@ const initialState = {
     }
 };
 
-export default function messages(state = initialState, action) {
+export default function chats(state = chatsInitialState, action) {
     let newState;
     if (action.channelId) {
         action.channelId = Number(action.channelId);
@@ -37,7 +37,7 @@ export default function messages(state = initialState, action) {
         case types.CHANGE_CHANNEL:
             return {...state,
                 currentChannel: action.channelId,
-                activeFilter: initialState.activeFilter
+                activeFilter: chatsInitialState.activeFilter
             }
         break;
         case types.JOIN_CHANNEL_SUCCESS:
@@ -68,7 +68,7 @@ export default function messages(state = initialState, action) {
 
             if (action.channelId == newState.currentChannel) {
                 newState.currentChannel = Object.keys(newState.channels)[0] || null; 
-                newState.activeFilter = initialState.activeFilter; 
+                newState.activeFilter = chatsInitialState.activeFilter; 
             }
             return newState;
         break;

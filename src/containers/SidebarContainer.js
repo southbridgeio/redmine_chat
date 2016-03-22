@@ -18,12 +18,13 @@ class SidebarContainer extends React.Component {
                     onToggleNotifications={this.props.onToggleNotifications}
                 />
                 <UserList users={this.props.users}/>
+                { !this.props.singleChannel ? 
                 <ChannelList 
                     activeChannel={this.props.activeChannel}
                     onSelectChannel={this.props.onSelectChannel}
                     onLeaveChannel={this.props.onLeaveChannel}
                     channels={this.props.channels}
-                />
+                /> : null }
             </div>
         )
     }
@@ -41,6 +42,7 @@ const mapStateToProps = (state) => {
         users: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].users : [],
         activeChannel: state.chats.currentChannel,
         channels: state.chats.channels,
+        singleChannel: state.account.singleChannel,
         notificationsEnabled: state.account.settings.notificationsEnabled
     }
 }

@@ -78,21 +78,39 @@ export function updateMessage(channelId, msgId, message) {
 }
 
 export function loadAccountInfo() {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch({
             type: types.LOAD_ACCOUNT_INFO
         });
         api.fetchAccountInfo().then(
             data => {
-                data.chats.forEach((ch) => {
-                    dispatch({
-                        type: types.JOIN_CHANNEL_SUCCESS,
-                        channelId: ch.id,
-                        channel: ch
+                if (getState().account.singleChannel) {
+                    let channel = data.chats.filter(ch => {
+                        return Number(ch.id) === getState().account.singleChannel;
+                    })[0];
+                    if (channel) {
+                        dispatch({
+                            type: types.JOIN_CHANNEL_SUCCESS,
+                            channelId: getState().account.singleChannel,
+                            channel
+                        });
+
+                        dispatch(fetchMessages(getState().account.singleChannel));
+                        subscribeToChannel(getState().account.singleChannel, dispatch);
+                    } else {
+                        dispatch(joinChannel(getState().account.singleChannel))
+                    }
+                } else {
+                    data.chats.forEach((ch) => {
+                        dispatch({
+                            type: types.JOIN_CHANNEL_SUCCESS,
+                            channelId: Number(ch.id),
+                            channel: ch
+                        });
+                        dispatch(fetchMessages(ch.id));
+                        subscribeToChannel(ch.id, dispatch);
                     });
-                    dispatch(fetchMessages(ch.id));
-                    subscribeToChannel(ch.id, dispatch);
-                });
+                }
                 return dispatch({
                     type: types.LOAD_ACCOUNT_INFO_SUCCESS,
                     data
