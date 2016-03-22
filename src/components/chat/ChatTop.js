@@ -17,6 +17,7 @@ export default class ChatTop extends React.Component {
             <div className={styles.chat__topbar}>
                 <Icon className={styles.chat__topbar__link} name="link"/>
                 <StarredFilter starred={this.props.starred} onClick={this.props.onStarredToggle}/>
+                <input className={styles.chat__topbar__search} placeholder="Поиск"/>
                 <Icon onClick={this.props.onMinimize} className={styles.chat__topbar__close} name="times"/>
             </div>
         )

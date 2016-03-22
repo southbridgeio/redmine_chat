@@ -10,13 +10,65 @@
     height: 80px;
     flex: 0 0 auto;
     composes: darkbluebg from 'styles/colors.module.css';
+    line-height: 80px;
 }
 
+.chat__topbar__link {
+    float: left;
+    font-size: 45px;
+    margin: 15px;
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg); 
+    -o-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);  
+}
+
+.chat__topbar__starred {
+    float:left;
+    font-size: 45px;
+    margin: 15px;
+    cursor: pointer
+}
 .chat__topbar__close {
     position: absolute;
     cursor: pointer;
     right: 15px;
     top: 15px;
+}
+
+.chat__topbar__search {
+    background: transparent;
+    padding: 12px;
+    margin-top: -15px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-bottom: 4px solid white;
+    width: 65%;
+    color: white; 
+    text-transform: uppercase;
+}
+.chat__topbar__search::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:white;
+    text-transform: uppercase;
+}
+.chat__topbar__search:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:white;
+    text-transform: uppercase;
+    opacity: 1;
+}
+.chat__topbar__search::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:white;
+    text-transform: uppercase;
+    opacity: 1;
+}
+.chat__topbar__search:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:white;
+    text-transform: uppercase;
+}
+.chat__topbar__search:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+    color:white;
+    text-transform: uppercase;
 }
 
 .channel_title {
