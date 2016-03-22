@@ -36,6 +36,9 @@ class ChatContainer extends React.Component {
                     messages={this.props.messages} 
                     onStarMessage={this.props.starMessage}
                     onDeleteMessage={this.props.deleteMessage}
+                    hasMessagesToLoad={this.props.hasMessagesToLoad}
+                    loadMore={this.props.loadMore}
+                    isLoading={this.props.loading}
                 />
                 <MessageComposer sendMessage={this.props.sendMessage}/>
             </div>
@@ -44,12 +47,15 @@ class ChatContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
+    const channel = state.chats.channels[state.chats.currentChannel];
     return {
         currentChannel: state.chats.currentChannel,
-        channelTitle: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].title : null,
-        channelLastVisited: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].last_visited_at : null,
+        channelTitle: channel ? channel.title : null,
+        channelLastVisited: channel ? channel.last_visited_at : null,
         activeFilter: state.chats.activeFilter,
-        messages: state.chats.messages[state.chats.currentChannel] || null
+        messages: state.chats.messages[state.chats.currentChannel] || null,
+        loading: state.chats.loading,
+        hasMessagesToLoad: channel ? (channel.totalMessages > channel.loadedMessages) : false
     }
 }
 
@@ -63,6 +69,11 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         fetchMessages: () => {
             if (stateProps.currentChannel !== null)
                 return dispatchProps.fetchMessages(stateProps.currentChannel, stateProps.activeFilter);
+        },
+        loadMore: () => {
+            if (stateProps.currentChannel !== null && stateProps.hasMessagesToLoad) {
+                return dispatchProps.fetchMoreMessages(stateProps.currentChannel);
+            }
         },
         sendMessage: (message) => {
             if (stateProps.currentChannel !== null ) {

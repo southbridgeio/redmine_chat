@@ -22,6 +22,25 @@ export function fetchMessages(channelId) {
     }
 }
 
+export function fetchMoreMessages(channelId) {
+    return (dispatch, getState) => {
+        if (getState().chats.loading) return;
+        dispatch({
+            type: types.LOAD_MORE_MESSAGES
+        });
+        return api.fetchMessages(channelId, Object.assign({}, getState().chats.activeFilter, {offset: getState().chats.channels[channelId].loadedMessages})).then(
+            data => dispatch({
+                type: types.LOAD_MORE_MESSAGES_SUCCESS,
+                data,
+                channelId
+            }),
+            error => dispatch({
+                type: types.LOAD_MORE_MESSAGES_FAIL,
+                error
+            })
+        )
+    }
+}
 
 export function sendMessage(channelId, message) {
     return dispatch => {

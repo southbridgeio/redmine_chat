@@ -18,6 +18,7 @@ function getUnreadCount(lastVisited, messages) {
     }).length;
 }
 export const chatsInitialState = {
+    loading: false,
     loaded: false,
     channels: {},
     messages: {},
@@ -188,6 +189,31 @@ export default function chats(state = chatsInitialState, action) {
                 }
             }
         break;
+
+        case types.LOAD_MORE_MESSAGES:
+            return {...state, 
+                loading: true
+            }
+        break;
+
+        case types.LOAD_MORE_MESSAGES_SUCCESS:
+            return {...state,
+                loading: false,
+                channels: {...state.channels,
+                    [action.channelId]: {
+                        ...state.channels[action.channelId],
+                        totalMessages: action.data.total,
+                        loadedMessages: state.channels[action.channelId].loadedMessages + action.data.messages.length,
+                    }
+
+                },
+                messages: {...state.messages,
+                    [action.channelId]: {
+                        ..._.indexBy(action.data.messages, 'id'),
+                        ...state.messages[action.channelId]
+                    }
+                }
+            }
 
         default:
             return state;
