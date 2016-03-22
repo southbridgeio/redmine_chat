@@ -19,6 +19,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
     @message.user_name    = @chat_user.try(:name).try(:value)
 
     if @message.save
+      @chat_user.chat_ids[@chat.id] = Time.now.to_i
       ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'message_new', @message.as_json
       render json: @message.as_json
     else
