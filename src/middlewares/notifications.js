@@ -11,14 +11,14 @@ if (Notification && Notification.permission === 'default') {
 }
 
 export const soundNotification = store => next => action => {
-    if (action.type == types.RECEIVE_MESSAGE) {
+    if ((action.type == types.RECEIVE_MESSAGE) && store.getState().account.settings.notificationsEnabled) {
         newMessageSound.play();
     }
     return next(action);
 }
 
 export const popupNotification = store => next => action => {
-    if (action.type === types.RECEIVE_MESSAGE && action.data.channelId !== store.getState().account.currentChannel) {
+    if ((action.type === types.RECEIVE_MESSAGE) && (action.data.channelId !== store.getState().chats.currentChannel) && store.getState().account.settings.notificationsEnabled) {
         if (('Notification' in window) && Notification.permission === 'granted') {
             let n = new Notification(action.data.name, {
                 body: action.data.message

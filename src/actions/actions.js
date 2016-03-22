@@ -200,3 +200,9 @@ export function applyFilter(filter) {
     }
 }
 
+
+export function toggleNotifications() {
+    return {
+        type: types.TOGGLE_NOTIFICATIONS
+    }
+}
