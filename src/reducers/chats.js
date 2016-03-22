@@ -75,6 +75,7 @@ export default function messages(state = initialState, action) {
 
         case types.RECEIVE_MESSAGE:
         case types.SEND_MESSAGE_SUCCESS:
+            if (state.activeFilter.starred || state.activeFilter.search) return state;
             newState = {...state,
                 messages: {...state.messages,
                     [action.channelId]: {
