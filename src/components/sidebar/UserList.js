@@ -6,7 +6,7 @@ class User extends React.Component {
     render() {
         return (
             <div className={styles.userlist__user}>
-                <img className={styles.userlist__user__avatar} src={this.props.user.photo_url}/>
+                <img className={styles.userlist__user__avatar} src={this.props.user.settings.photo_url}/>
                 <div className={styles.userlist__user__name}>{this.props.user.name}</div>
             </div>
         )
