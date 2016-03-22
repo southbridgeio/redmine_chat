@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {connect} from 'react-redux';
-import { changeChannel, leaveChannel, toggleNotifications } from 'actions/actions';
+import { changeChannel, leaveChannel, toggleNotifications, leaveAllChannels } from 'actions/actions';
 
 import SidebarTop from 'components/sidebar/SidebarTop';
 import ChannelList from 'components/sidebar/ChannelList';
@@ -15,6 +15,7 @@ class SidebarContainer extends React.Component {
             <div className={styles.sidebar}>
                 <SidebarTop
                     notificationsEnabled={this.props.notificationsEnabled} 
+                    onLeaveAllChannels={this.props.onLeaveAllChannels}
                     onToggleNotifications={this.props.onToggleNotifications}
                 />
                 <UserList users={this.props.users}/>
@@ -34,7 +35,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onSelectChannel: (channelId) => dispatch(changeChannel(channelId)),
         onLeaveChannel: (channelId) => dispatch(leaveChannel(channelId)),
-        onToggleNotifications: () => dispatch(toggleNotifications())
+        onToggleNotifications: () => dispatch(toggleNotifications()),
+        onLeaveAllChannels: () => dispatch(leaveAllChannels())
     }
 }
 const mapStateToProps = (state) => {

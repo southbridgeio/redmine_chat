@@ -186,6 +186,14 @@ export function leaveChannel(channelId) {
     }
 }
 
+export function leaveAllChannels() {
+    return (dispatch, getState) => {
+        Object.keys(getState().chats.channels).forEach(channelId => {
+            dispatch(leaveChannel(channelId));
+        });
+    }
+}
+
 export function updateChannelLastVisited(channelId) {
     return dispatch => {
         dispatch({
