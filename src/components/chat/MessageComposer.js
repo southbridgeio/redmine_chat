@@ -10,7 +10,7 @@ export default class MessageComposer extends React.Component {
             text: ''
         }
     }
-    handleSubmit(ev) {
+    _handleKeyDown(ev) {
         if (ev.which === 13 && !ev.shiftKey) {
             ev.preventDefault();
 
@@ -22,9 +22,18 @@ export default class MessageComposer extends React.Component {
                 });
             }
         }
-
     }
-    handleChange(ev) {
+    _handleSubmitClick(ev) {
+        ev.preventDefault();
+        if (this.state.text.length > 0) {
+            const {sendMessage} = this.props;
+            sendMessage(this.state.text);
+            this.setState({
+                text: ''
+            });
+        }
+    }
+    _handleChange(ev) {
         this.setState({ text: ev.target.value });
     }
     render() {
@@ -39,14 +48,14 @@ export default class MessageComposer extends React.Component {
                     ref="messageComposer"
                     autoFocus="true"
                     placeholder="Введите сообщение"
-                    onChange={::this.handleChange}
-                    onKeyDown={::this.handleSubmit}
+                    onChange={::this._handleChange}
+                    onKeyDown={::this._handleKeyDown}
                 />
                 <div className={styles.composer__buttons}>
                     <div href="#" className={styles.composer__buttons__invite}>
                         <Icon size="2x" name="bell-o"/>&nbsp;Позвать в чат
                     </div>
-                    <div onClick={::this.handleSubmit} className={styles.composer__buttons__send}>Отправить</div>
+                    <div onClick={::this._handleSubmitClick} className={styles.composer__buttons__send}>Отправить</div>
                 </div>
             </div>
         );
