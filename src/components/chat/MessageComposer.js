@@ -43,10 +43,10 @@ export default class MessageComposer extends React.Component {
                     onKeyDown={::this.handleSubmit}
                 />
                 <div className={styles.composer__buttons}>
-                    <a href="#" className={styles.composer__buttons__invite}>
+                    <div href="#" className={styles.composer__buttons__invite}>
                         <Icon size="2x" name="bell-o"/>&nbsp;Позвать в чат
-                    </a>
-                    <a href="#" onClick={::this.handleSubmit} className={styles.composer__buttons__send}>Отправить</a>
+                    </div>
+                    <div onClick={::this.handleSubmit} className={styles.composer__buttons__send}>Отправить</div>
                 </div>
             </div>
         );

@@ -118,6 +118,8 @@
     text-decoration: none;
     float: left;
     text-transform: uppercase;
+    cursor: pointer;
+    color: #3e5a76;
 }
 .composer__buttons__send {
     text-decoration: none;
@@ -128,5 +130,5 @@
     text-align: center;
     height: 40px;
     border-radius: 30px;
-    color: white;
+    cursor: pointer;
 }
