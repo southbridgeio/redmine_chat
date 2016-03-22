@@ -6,7 +6,11 @@ import styles from 'styles/chat.module.css';
 class StarredFilter extends React.Component {
     render() {
         return (
-            <Icon className={styles.chat__topbar__starred} name={this.props.starred ? "star" : "star-o"}/>
+            <Icon 
+                onClick={this.props.onClick}
+                className={styles.chat__topbar__starred}
+                name={this.props.starred ? "star" : "star-o"}
+            />
         )
     }
 }
@@ -16,7 +20,7 @@ export default class ChatTop extends React.Component {
         return (
             <div className={styles.chat__topbar}>
                 <Icon className={styles.chat__topbar__link} name="link"/>
-                <StarredFilter starred={this.props.starred} onClick={this.props.onStarredToggle}/>
+                <StarredFilter starred={this.props.starred} onClick={this.props.onToggleFilterStarred}/>
                 <input className={styles.chat__topbar__search} placeholder="Поиск"/>
                 <Icon onClick={this.props.onMinimize} className={styles.chat__topbar__close} name="times"/>
             </div>

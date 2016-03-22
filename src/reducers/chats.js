@@ -20,14 +20,28 @@ function getUnreadCount(lastVisited, messages) {
 const initialState = {
     loaded: false,
     channels: {},
-    messages: {}
+    messages: {},
+    currentChannel: null,
+    activeFilter: {
+        starred: false,
+        search: null
+    }
 };
 
 export default function messages(state = initialState, action) {
     let newState;
+    if (action.channelId) {
+        action.channelId = Number(action.channelId);
+    }
     switch (action.type) {
+        case types.CHANGE_CHANNEL:
+            return {...state,
+                currentChannel: action.channelId,
+                activeFilter: initialState.activeFilter
+            }
+        break;
         case types.JOIN_CHANNEL_SUCCESS:
-            return {...state, 
+            newState = {...state, 
                 channels: {
                     ...state.channels,
                     [action.channelId] : {
@@ -41,11 +55,21 @@ export default function messages(state = initialState, action) {
                     [action.channelId]: {}
                 }
             }
+            if (state.currentChannel === null) {
+                newState.currentChannel = action.channelId;
+            }
+            return newState;
+        break;
 
         case types.LEAVE_CHANNEL_SUCCESS:
             newState = Object.assign({}, state);
             delete newState.channels[action.channelId];
             delete newState.messages[action.channelId];
+
+            if (action.channelId == newState.currentChannel) {
+                newState.currentChannel = Object.keys(newState.channels)[0] || null; 
+                newState.activeFilter = initialState.activeFilter; 
+            }
             return newState;
         break;
 
@@ -68,11 +92,13 @@ export default function messages(state = initialState, action) {
             }
             newState.channels[action.channelId].unreadCount = getUnreadCount(newState.channels[action.channelId].last_visited_at, newState.messages[action.channelId]);
             return newState;
+        break;
 
         case types.LOAD_MESSAGES:
             return {...state,
                 loading: true
             };
+        break;
 
         case types.LOAD_MESSAGES_SUCCESS:
             return {...state,
@@ -92,6 +118,7 @@ export default function messages(state = initialState, action) {
                     [action.channelId]: _.indexBy(action.data.messages, 'id')
                 }
             };
+        break;
 
         case types.LOAD_MESSAGES_FAIL:
             return {...state,
@@ -99,6 +126,7 @@ export default function messages(state = initialState, action) {
                 loaded: false,
                 error: action.error,
             };
+        break;
 
         case types.UPDATE_MESSAGE_SUCCESS:
             return {...state,
@@ -108,6 +136,7 @@ export default function messages(state = initialState, action) {
                     }
                 }
             }
+        break;
 
         case types.DELETE_MESSAGE_SUCCESS:
             return {...state,
@@ -115,6 +144,7 @@ export default function messages(state = initialState, action) {
                     [action.channelId] : _.without(state.messages[action.channelId], action.msgId)
                 }
             };
+        break;
 
         case types.USER_JOIN:
             if (!state.channels[action.channelId]) return state;
@@ -125,6 +155,7 @@ export default function messages(state = initialState, action) {
                     }
                 }
             }
+        break;
 
         case types.USER_LEAVE:
             if (!state.channels[action.channelId]) return state;
@@ -135,7 +166,7 @@ export default function messages(state = initialState, action) {
                     }
                 }
             }
-
+        break;
 
         case types.UPDATE_CHANNEL_LAST_VISITED_SUCCESS:
             return {...state,
@@ -147,6 +178,15 @@ export default function messages(state = initialState, action) {
                     }
                 }                
             }
+        break;
+
+        case types.APPLY_FILTER:
+            return {...state,
+                activeFilter: {...state.activeFilter,
+                    ...action.filter
+                }
+            }
+        break;
 
         default:
             return state;

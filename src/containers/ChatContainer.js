@@ -22,7 +22,13 @@ class ChatContainer extends React.Component {
         }
         return (
             <div className={styles.chatcontainer}>
-                <ChatTop onMinimize={this.props.minimizeChat}/>
+                <ChatTop 
+                    onMinimize={this.props.minimizeChat}
+                    onToggleFilterStarred={this.props.toggleFilterStarred}
+                    onSearch={this.props.onSearch}
+                    starred={this.props.activeFilter.stared}
+                    searchString={this.props.activeFilter.search}
+                />
                 <div className={styles.channel_title}>{this.props.channelTitle}</div>
                 <MessageList 
                     channelLastVisited={this.props.channelLastVisited}
@@ -39,10 +45,11 @@ class ChatContainer extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        currentChannel: state.account.currentChannel,
-        channelTitle: state.account.currentChannel ? state.chats.channels[state.account.currentChannel].title : null,
-        channelLastVisited: state.account.currentChannel ? new Date(state.chats.channels[state.account.currentChannel].last_visited_at).getTime() : null,
-        messages: state.chats.messages[state.account.currentChannel] || null
+        currentChannel: state.chats.currentChannel,
+        channelTitle: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].title : null,
+        channelLastVisited: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].last_visited_at : null,
+        activeFilter: state.chats.activeFilter,
+        messages: state.chats.messages[state.chats.currentChannel] || null
     }
 }
 
@@ -55,7 +62,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     return Object.assign({}, stateProps, dispatchProps, {
         fetchMessages: () => {
             if (stateProps.currentChannel !== null)
-                return dispatchProps.fetchMessages(stateProps.currentChannel);
+                return dispatchProps.fetchMessages(stateProps.currentChannel, stateProps.activeFilter);
         },
         sendMessage: (message) => {
             if (stateProps.currentChannel !== null ) {
@@ -80,6 +87,11 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
                     }
                 );
             }
+        },
+        toggleFilterStarred: () => {
+            return dispatchProps.applyFilter({
+                stared: !stateProps.activeFilter.stared
+            })
         }
     });
 }

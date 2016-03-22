@@ -21,7 +21,14 @@ function processApiResponse(res) {
 };
 
 export function fetchMessages(channel, options) {
-    return makeRequest(`${API_URL}/chats/${channel}/messages`).then(processApiResponse);
+    let url = `${API_URL}/chats/${channel}/messages`,
+        params = Object.keys(options).filter(key => !!options[key]).map(key => {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(options[key])
+    }).join('&');
+    if (params.length) {
+        url += '?' + params;
+    }
+    return makeRequest(url).then(processApiResponse);
 };
 
 export function sendMessage(channel, message) {

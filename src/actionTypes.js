@@ -38,4 +38,6 @@ export const USER_LEAVE = 'USER_LEAVE';
 
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL';
 
+export const APPLY_FILTER = 'APPLY_FILTER';
+
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';

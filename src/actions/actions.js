@@ -8,11 +8,11 @@ import { subscribeToChannel, unsubscribeFromChannel } from 'sources/faye';
 // NOTE:Chat actions
 
 export function fetchMessages(channelId) {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch({
             type: types.LOAD_MESSAGES
         });
-        return api.fetchMessages(channelId).then(
+        return api.fetchMessages(channelId, getState().chats.activeFilter).then(
             data => dispatch({
                 type: types.LOAD_MESSAGES_SUCCESS,
                 data,
@@ -183,6 +183,20 @@ export function updateChannelLastVisited(channelId) {
                 err
             })
         )
+    }
+}
+
+export function applyFilter(filter) {
+    return (dispatch, getState) => {
+        let dispatched = dispatch({
+            type: types.APPLY_FILTER,
+            filter
+        });
+        if (getState().chats.currentChannel !== null) {
+            return dispatch(fetchMessages(getState().chats.currentChannel));
+        } else {
+            return dispatched;
+        }
     }
 }
 

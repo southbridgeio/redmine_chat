@@ -34,8 +34,8 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = (state) => {
     return {
-        users: state.account.currentChannel ? state.chats.channels[state.account.currentChannel].users : [],
-        activeChannel: state.account.currentChannel,
+        users: state.chats.currentChannel ? state.chats.channels[state.chats.currentChannel].users : [],
+        activeChannel: state.chats.currentChannel,
         channels: state.chats.channels
     }
 }
