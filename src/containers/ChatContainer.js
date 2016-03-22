@@ -11,10 +11,6 @@ import { minimizeChat } from 'actions/UI';
 import styles from 'styles/chat.module.css';
 
 class ChatContainer extends React.Component {
-    _deleteMessage(msgId) {
-        const {dispatch} = this.props;
-        dispatch(actions.deleteMessage(this.props.currentChannel, msgId));
-    }
     render() {
         if (this.props.currentChannel === null) {
             return (
@@ -65,6 +61,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
             if (stateProps.currentChannel !== null ) {
                 return dispatchProps.sendMessage(stateProps.currentChannel, message);
             }
+        },
+        deleteMessage: (msgId) => {
+            if (stateProps.currentChannel !== null) {
+                return dispatchProps.deleteMessage(
+                    stateProps.currentChannel,
+                    msgId
+                )
+            }   
         },
         starMessage: (msgId) => {
             if (stateProps.currentChannel !== null) {
