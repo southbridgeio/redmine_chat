@@ -25,6 +25,7 @@ export default class ChatTop extends React.Component {
             }
         } else if (ev.keyCode === 27) {
             ev.preventDefault();
+            input.value = "";
             this.props.onSearch(null);
         }
     }
@@ -37,7 +38,7 @@ export default class ChatTop extends React.Component {
                     className={styles.chat__topbar__search} 
                     placeholder="Поиск"
                     ref="search"
-                    value={this.props.searchString}
+                    initialValue={this.props.searchString || ""}
                     onKeyDown={::this._onKeyDown}
                 />
                 <Icon onClick={this.props.onMinimize} className={styles.chat__topbar__close} name="times"/>
