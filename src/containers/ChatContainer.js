@@ -92,6 +92,11 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
             return dispatchProps.applyFilter({
                 stared: !stateProps.activeFilter.stared
             })
+        },
+        onSearch: (searchString) => {
+            return dispatchProps.applyFilter({
+                search: searchString
+            })
         }
     });
 }
