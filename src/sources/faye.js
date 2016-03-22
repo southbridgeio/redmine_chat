@@ -1,11 +1,20 @@
 import * as types from 'actionTypes';
 import Faye from 'faye';
 
-let client = new Faye.Client('/redmine-chat/chat') ;
+let client = new Faye.Client('/redmine-chat/chat'),
+    subscriptions = {};
 
+export function unsubscribeFromChannel(channelId) {
+    if (channelId in subscriptions) {
+        subscriptions[channelId].cancel();
+        delete subscriptions[channelId];
+    }
+}
 export function subscribeToChannel(channelId, dispatch) {
     channelId = Number(channelId);
-    client.subscribe(`/chat/${channelId}`, (message) => {
+    if (channelId in subscriptions) return; 
+        
+    subscriptions[channelId] = client.subscribe(`/chat/${channelId}`, (message) => {
         switch (message.type) {
         case "message_new":
             dispatch({
@@ -32,5 +41,6 @@ export function subscribeToChannel(channelId, dispatch) {
         break;
         }
     })
+
 }
 

@@ -39,8 +39,8 @@ export default class Message extends React.Component {
                         onDeleteMessage={() => this.props.onDeleteMessage(this.props.message.id)}
                         stared={this.props.message.stared}
                     />
-                    <div className={styles.header__date}>{moment(this.props.message.created_at).format("DD MMM")}</div>
-                    <div className={this._isUnread() ? styles.header__time_unread : styles.header__time}>{moment(this.props.message.created_at).format("hh:mm")}</div>
+                    <div className={styles.header__date}>{moment(this.props.message.created_at * 1000).format("DD MMM")}</div>
+                    <div className={this._isUnread() ? styles.header__time_unread : styles.header__time}>{moment(this.props.message.created_at * 1000).format("hh:mm")}</div>
                     <div className={this._isUnread() ? styles.header__author_unread : styles.header__author}>{this.props.message.name}</div>
                 </div>
                 <div className={styles.text} dangerouslySetInnerHTML={this._createMarkup(this.props.message.message)}/>

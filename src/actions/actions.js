@@ -3,7 +3,7 @@ import * as types from 'actionTypes';
 import * as api from 'sources/api';
 
 import { maximizeChat } from 'actions/UI';
-import {subscribeToChannel} from 'sources/faye';
+import { subscribeToChannel, unsubscribeFromChannel } from 'sources/faye';
 
 // NOTE:Chat actions
 
@@ -158,7 +158,7 @@ export function leaveChannel(channelId) {
                     channelId,
                     result
                 });
-                //unsubscribeFromChannel(channelId, dispatch);
+                unsubscribeFromChannel(channelId);
             },
             err => dispatch({
                 type: types.LEAVE_CHANNEL_FAIL,
