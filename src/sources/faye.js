@@ -40,7 +40,10 @@ export function subscribeToChannel(channelId, dispatch) {
             })
         break;
         }
-    })
+    }).then(
+        res => console.log('Subscribed to channel', channelId),
+        err => console.log('Error while subscribing', err)
+    );
 
 }
 
