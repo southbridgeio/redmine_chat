@@ -1,5 +1,4 @@
 import * as types from 'actionTypes';
-import Faye from 'faye';
 
 let client = new Faye.Client('/redmine-chat/chat'),
     subscriptions = {};
