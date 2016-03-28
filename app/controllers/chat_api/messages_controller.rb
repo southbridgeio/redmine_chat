@@ -51,7 +51,7 @@ class ChatApi::MessagesController < ChatApi::BaseController
     @message = ChatMessage.find(params[:id])
     @chat    = Chat.new(@message.issue_id)
     if @message.chat_user_id == @chat_user.id.to_s
-      ChatBroadcastWorker.perform_async "/chat/#{@issue.id}", 'message_delete', @message.as_json
+      ChatBroadcastWorker.perform_async "/chat/#{@message.issue_id}", 'message_delete', @message.as_json
       @message.destroy
       render json: { notice: 'Chat message was successfully destroyed.' }
     else
