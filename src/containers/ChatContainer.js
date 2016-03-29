@@ -40,7 +40,10 @@ class ChatContainer extends React.Component {
                     loadMore={this.props.loadMore}
                     isLoading={this.props.loading}
                 />
-                <MessageComposer sendMessage={this.props.sendMessage}/>
+                <MessageComposer 
+                    sendMessage={this.props.sendMessage}
+                    inviteToChat={this.props.inviteToChat}
+                />
             </div>
         )
     }
@@ -69,6 +72,10 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         fetchMessages: () => {
             if (stateProps.currentChannel !== null)
                 return dispatchProps.fetchMessages(stateProps.currentChannel, stateProps.activeFilter);
+        },
+        inviteToChat: () => {
+            if (stateProps.currentChannel !== null)
+                return dispatchProps.inviteToChat(stateProps.currentChannel);
         },
         loadMore: () => {
             if (stateProps.currentChannel !== null && stateProps.hasMessagesToLoad) {

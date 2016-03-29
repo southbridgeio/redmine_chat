@@ -22,6 +22,14 @@ export function fetchMessages(channelId) {
     }
 }
 
+export function inviteToChat(channelId) {
+    return (dispatch, getState) => {
+        return api.inviteToChat(channelId).then(
+            res => alert('Приглашение отправлено')
+        )
+    }
+}
+
 export function fetchMoreMessages(channelId) {
     return (dispatch, getState) => {
         if (getState().chats.loading) return;

@@ -31,6 +31,12 @@ export function fetchMessages(channel, options) {
     return makeRequest(url).then(processApiResponse);
 };
 
+export function inviteToChat(channelId) {
+    return makeRequest(`${API_URL}/chats/${channelId}/invite`, {
+        method: 'POST'
+    });
+}
+
 export function sendMessage(channel, message) {
     return makeRequest(`${API_URL}/chats/${channel}/messages`, {
         method: 'post',

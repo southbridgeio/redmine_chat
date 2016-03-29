@@ -36,6 +36,10 @@ export default class MessageComposer extends React.Component {
     _handleChange(ev) {
         this.setState({ text: ev.target.value });
     }
+    _handleInviteClick(ev) {
+        this.props.inviteToChat();
+        return ev.preventDefault();
+    }
     render() {
         return (
             <div className={styles.composer}>
@@ -52,7 +56,7 @@ export default class MessageComposer extends React.Component {
                     onKeyDown={::this._handleKeyDown}
                 />
                 <div className={styles.composer__buttons}>
-                    <div href="#" className={styles.composer__buttons__invite}>
+                    <div onClick={::this._handleInviteClick} href="#" className={styles.composer__buttons__invite}>
                         <Icon size="2x" name="bell-o"/>&nbsp;Позвать в чат
                     </div>
                     <div onClick={::this._handleSubmitClick} className={styles.composer__buttons__send}>Отправить</div>
