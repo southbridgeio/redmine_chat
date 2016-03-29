@@ -4,6 +4,7 @@ let client = new Faye.Client('/redmine-chat/chat'),
     subscriptions = {};
 
 export function unsubscribeFromChannel(channelId) {
+    channelId = Number(channelId);
     if (channelId in subscriptions) {
         subscriptions[channelId].cancel();
         delete subscriptions[channelId];
@@ -39,10 +40,6 @@ export function subscribeToChannel(channelId, dispatch) {
             })
         break;
         }
-    }).then(
-        res => console.log('Subscribed to channel', channelId),
-        err => console.log('Error while subscribing', err)
-    );
-
+    });
 }
 

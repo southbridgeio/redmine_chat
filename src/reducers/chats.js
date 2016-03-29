@@ -63,15 +63,16 @@ export default function chats(state = chatsInitialState, action) {
         break;
 
         case types.LEAVE_CHANNEL_SUCCESS:
-            newState = Object.assign({}, state);
-            delete newState.channels[action.channelId];
-            delete newState.messages[action.channelId];
-
-            if (action.channelId == newState.currentChannel) {
-                newState.currentChannel = Object.keys(newState.channels)[0] || null; 
-                newState.activeFilter = chatsInitialState.activeFilter; 
+            let s = {...state, 
+                channels: _.omit(state.channels, action.channelId),
+                messages: _.omit(state.messages, action.channelId),
             }
-            return newState;
+
+            if (action.channelId == s.currentChannel) {
+                s.currentChannel = Object.keys(s.channels)[0] || null; 
+                s.activeFilter = chatsInitialState.activeFilter; 
+            }
+            return s;
         break;
 
         case types.RECEIVE_MESSAGE:
