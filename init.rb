@@ -18,6 +18,7 @@ Redmine::Plugin.register :redmine_chat do
   author_url 'http://centos-admin.ru'
 
   project_module :chat do
+    permission :join_chat, :chat_messages => :create
     permission :chatting, :chat_messages => :index
     permission :chatting, :chat_messages => :create
   end

@@ -1,9 +1,9 @@
 <div id="ChatApp"></div>
-<% if User.current.admin? %>
+<%# if User.current.allowed_to?(:join_chat, @project) %>
 
     <script src="/redmine-chat/chat.js"></script>
   <script>
-  
+
   // Load chat script and then call init function
 
   var script = document.createElement('script');
@@ -26,4 +26,4 @@
   document.documentElement.appendChild(script);
   </script>
 
-<% end %>
+<%# end %>
