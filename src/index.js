@@ -19,7 +19,9 @@ methods.joinChat = (chatId) => {
 
 methods.initChatFull = (container, opts) => {
     console.log("initializing chat");
-    const store = configureStore();
+    const store = configureStore({
+        minimized: typeof(opts.minimized) === 'undefined' ? true : opts.minimized
+    });
     render(
         <Provider store={store}>
             <App/>
@@ -45,7 +47,8 @@ methods.initChatSingleChannel = (container, opts) => {
         }),
         chats: Object.assign({}, chatsInitialState, {
             currentChannel: opts.channelId
-        })
+        }),
+        minimized: typeof(opts.minimized) === 'undefined' ? true : opts.minimized
     });
     render(
         <Provider store={store}>
