@@ -14,3 +14,11 @@ create chat.yml in config directory from example
 
 
 puma -C plugins/redmine_chat/config/puma.rb
+
+
+
+to start frontend dev-server:
+```npm start```
+
+to build for production:
+```npm run build```
