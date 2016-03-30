@@ -29,8 +29,12 @@ class ChatContainer extends React.Component {
                     starred={this.props.activeFilter.stared}
                     searchString={this.props.activeFilter.search}
                     sharedLink={this.props.sharedLink}
+                    channelArchived={this.props.channelArchived}
                 />
-                <div className={styles.channel_title}>{this.props.channelTitle}</div>
+                <div className={styles.channel_title}>
+                    {this.props.channelTitle}
+                    {this.props.channelArchived ? <div className={styles.channel__archived}>Архив</div> : null}
+                </div>
                 <MessageList 
                     channelLastVisited={this.props.channelLastVisited}
                     channelTitle={this.props.channelTitle}
@@ -40,11 +44,12 @@ class ChatContainer extends React.Component {
                     hasMessagesToLoad={this.props.hasMessagesToLoad}
                     loadMore={this.props.loadMore}
                     isLoading={this.props.loading}
+                    channelArchived={this.props.channelArchived}
                 />
-                <MessageComposer 
+                {this.props.channelArchived ? null : <MessageComposer 
                     sendMessage={this.props.sendMessage}
                     inviteToChat={this.props.inviteToChat}
-                />
+                />}
             </div>
         )
     }
@@ -59,6 +64,7 @@ const mapStateToProps = state => {
         activeFilter: state.chats.activeFilter,
         messages: state.chats.messages[state.chats.currentChannel] || null,
         loading: state.chats.loading,
+        channelArchived: channel.archive,
         sharedLink: `${window.location.origin}/chats/${state.chats.currentChannel}?token=${channel.shared_key}`,
         hasMessagesToLoad: channel ? (channel.totalMessages > channel.loadedMessages) : false
     }

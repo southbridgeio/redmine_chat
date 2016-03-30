@@ -68,7 +68,7 @@ export default class ChatTop extends React.Component {
             )
         } else return (
             <div className={styles.chat__topbar}>
-                <Icon onClick={::this._toggleShareLink} className={styles.chat__topbar__link} name="link"/>
+                {this.props.channelArchived ? null : <Icon onClick={::this._toggleShareLink} className={styles.chat__topbar__link} name="link"/>}
                 <StarredFilter starred={this.props.starred} onClick={this.props.onToggleFilterStarred}/>
                 <input 
                     className={styles.chat__topbar__search} 

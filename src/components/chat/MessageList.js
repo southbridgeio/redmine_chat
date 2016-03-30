@@ -61,6 +61,7 @@ export default class MessageList extends React.Component {
                         onStarMessage={this.props.onStarMessage}
                         message={this.props.messages[msgId]} 
                         key={msgId}
+                        channelArchived={this.props.channelArchived}
                     />)}
                 </div>
             </div>

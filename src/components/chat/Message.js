@@ -13,9 +13,9 @@ class Buttons extends React.Component {
                 <a href="#" className={styles.header__buttons__button} onClick={this.props.onStarMessage}>
                     <Icon size="lg" name={this.props.stared ? "star" : "star-o"}/>
                 </a>
-                <a href="#" className={styles.header__buttons__button} onClick={this.props.onDeleteMessage}>
+                {this.props.channelArchived ? null :<a href="#" className={styles.header__buttons__button} onClick={this.props.onDeleteMessage}>
                     <Icon size="lg" name="times"/>
-                </a>
+                </a>}
                 <a href="#" className={styles.header__buttons__button} onClick={()=>{}}>
                     <Icon size="lg" name="ellipsis-v"/>
                 </a>
@@ -35,6 +35,7 @@ export default class Message extends React.Component {
             <div className={styles.message}>
                 <div className={styles.header}>
                     <Buttons 
+                        channelArchived={this.props.channelArchived}
                         onStarMessage={() => this.props.onStarMessage(this.props.message.id)} 
                         onDeleteMessage={() => this.props.onDeleteMessage(this.props.message.id)}
                         stared={this.props.message.stared}
