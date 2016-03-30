@@ -27,12 +27,20 @@
     script.onreadystatechange = function () {
       if (script.readyState === "loaded" || script.readyState === "complete") {
         script.onreadystatechange = null;
-        __REDMINE_CHAT__.initChatSingleChannel(container, {channelId: <%= @issue.id %>})
+        __REDMINE_CHAT__.initChatSingleChannel(container, {
+          channelId: <%= @issue.id %>,
+          authToken: <%= @chat_token %>,
+          minimized: <%= !@maximized %>
+        })
       }
     };
   } else { // others
     script.onload = function () {
-      __REDMINE_CHAT__.initChatSingleChannel(container, {channelId: <%= @issue.id %>})
+      __REDMINE_CHAT__.initChatSingleChannel(container, {
+        channelId: <%= @issue.id %>,
+        authToken: <%= @chat_token %>,
+        minimized: <%= !@maximized %>
+      })
     }
   }
   <% end %>
