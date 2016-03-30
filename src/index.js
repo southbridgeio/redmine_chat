@@ -17,7 +17,7 @@ methods.joinChat = (chatId) => {
     console.log("Chat is not initialized");
 }
 
-methods.initChatFull = (container, opts) => {
+methods.initChatFull = (container, opts = {}) => {
     console.log("initializing chat");
     const store = configureStore({
         UI : {
@@ -28,14 +28,14 @@ methods.initChatFull = (container, opts) => {
         <Provider store={store}>
             <App/>
         </Provider>,
-        container 
+        container
     );
     methods.joinChat = (chatId) => {
         store.dispatch(joinChannel(chatId));
     }
 }
 
-methods.initChatSingleChannel = (container, opts) => {
+methods.initChatSingleChannel = (container, opts = {}) => {
     console.log("initializing single channel chat");
     if (!'channelId' in opts) {
         throw new Error("Single chat constructor requires channelId option");
@@ -58,9 +58,9 @@ methods.initChatSingleChannel = (container, opts) => {
         <Provider store={store}>
             <App/>
         </Provider>,
-        container 
+        container
     );
 }
 
 
-module.exports = methods; 
+module.exports = methods;
