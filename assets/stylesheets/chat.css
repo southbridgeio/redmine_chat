@@ -2125,8 +2125,15 @@
 
 .sidebar-module__channellist__channel___1MmbB {
     position: relative;
-    padding: 45px 45px 35px 45px;
     border-bottom: 1px solid #7294ba;
+}
+
+.sidebar-module__channellist__channel__title___1CQq2 {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin-right: 45px;
+    padding: 45px 0 35px 45px;
 }
 
 .sidebar-module__channellist__channel__unread___1P3X0 {

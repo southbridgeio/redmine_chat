@@ -24,8 +24,15 @@
 
 .channellist__channel {
     position: relative;
-    padding: 45px 45px 35px 45px;
     border-bottom: 1px solid #7294ba;
+}
+
+.channellist__channel__title {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin-right: 45px;
+    padding: 45px 0 35px 45px;
 }
 
 .channellist__channel__unread {

@@ -18,10 +18,12 @@ class Channel extends React.Component {
     render() {
         return (
             <div className={styles.channellist__channel}>
-                {(this.props.isActive) ? <div className={styles.channellist__channel__selection}></div> : null }
-                <span onClick={this.props.onSelect}>{this.props.channel.title}</span>
-                
-                <UnreadCount count={this.props.channel.unreadCount}/>
+                <div onClick={this.props.onSelect} className={styles.channellist__channel__title}>
+                    {(this.props.isActive) ? <div className={styles.channellist__channel__selection}></div> : null }
+                    <span onClick={this.props.onSelect}>{this.props.channel.title}</span>
+                    
+                    <UnreadCount count={this.props.channel.unreadCount}/>
+                </div>
                 <div className={styles.channellist__channel__leave}>
                     <Icon className={styles.channellist__channel__leave__icon} onClick={this.props.onLeave}name="power-off"/>
                 </div>
