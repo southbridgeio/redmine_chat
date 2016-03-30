@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'store/configureStore';
 
+import { setAuthToken } from 'sources/api';
+
 import {joinChannel} from 'actions/actions';
 import App from './app';
 
@@ -33,6 +35,9 @@ methods.initChatSingleChannel = (container, opts) => {
     console.log("initializing single channel chat");
     if (!'channelId' in opts) {
         throw new Error("Single chat constructor requires channelId option");
+    }
+    if ('authToken' in opts) {
+        setAuthToken(opts.authToken);
     }
     const store = configureStore({
         account: Object.assign({}, accountInitialState, {

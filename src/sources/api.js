@@ -6,15 +6,20 @@ export function setAuthToken(authtoken) {
 }
 
 function makeRequest(url, options) {
-    return fetch(url, {
+    let req = {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         credentials: 'same-origin',
         ...options
-    })
+    };
+    if (token !== null) {
+        req.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return fetch(url, req);
 }
+
 function processApiResponse(res) {
     if (res.ok) return res.json();
     throw new Error('Unable to process API response');
