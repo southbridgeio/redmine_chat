@@ -59,7 +59,7 @@ const mapStateToProps = state => {
         activeFilter: state.chats.activeFilter,
         messages: state.chats.messages[state.chats.currentChannel] || null,
         loading: state.chats.loading,
-        sharedLink: window.location.origin + '/' + channel.shared_key,
+        sharedLink: `${window.location.origin}/chats/${state.chats.currentChannel}?token=${channel.shared_key}`,
         hasMessagesToLoad: channel ? (channel.totalMessages > channel.loadedMessages) : false
     }
 }
