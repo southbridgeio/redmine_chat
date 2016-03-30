@@ -1,29 +1,45 @@
 <div id="ChatApp"></div>
+<!-- TODO: Uncomment it when we finished with frontend -->
 <%# if User.current.allowed_to?(:join_chat, @project) %>
 
-    <script src="/redmine-chat/chat.js"></script>
-  <script>
+<script src="/redmine-chat/chat.js"></script>
+<script>
 
   // Load chat script and then call init function
 
   var script = document.createElement('script');
-
-  if(script.readyState) {  // IE
-      script.onreadystatechange = function() {
-          if ( script.readyState === "loaded" || script.readyState === "complete"  ) {
-              script.onreadystatechange = null;
-              __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
-          }
-      };
-  } else{ // others
-      script.onload = function() {
-          __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
+  var container = document.getElementById('ChatApp');
+  <% if User.current.admin? %>
+  if (script.readyState) {  // IE
+    script.onreadystatechange = function () {
+      if (script.readyState === "loaded" || script.readyState === "complete") {
+        script.onreadystatechange = null;
+        __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
       }
+    };
+  } else { // others
+    script.onload = function () {
+      __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
+    }
   }
+  <% else %>
+  if (script.readyState) {  // IE
+    script.onreadystatechange = function () {
+      if (script.readyState === "loaded" || script.readyState === "complete") {
+        script.onreadystatechange = null;
+        __REDMINE_CHAT__.initChatSingleChannel(container, {channelId: <%= @issue.id %>})
+      }
+    };
+  } else { // others
+    script.onload = function () {
+      __REDMINE_CHAT__.initChatSingleChannel(container, {channelId: <%= @issue.id %>})
+    }
+  }
+  <% end %>
 
   // TODO: change script path to generate by redmine instead of hardcoded one
   script.src = "/plugin_assets/redmine_chat/javascripts/chat.js"
   document.documentElement.appendChild(script);
-  </script>
+</script>
 
 <%# end %>

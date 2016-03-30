@@ -15,6 +15,7 @@
   <%= heads_for_theme %>
   <!-- page specific tags -->
   <%= yield :header_tags -%>
+  <%= render 'shared/chat_css' %>
   <style>
     body {
       background-image: url("/plugin_assets/redmine_chat/images/guest-chat-bg.jpg");
