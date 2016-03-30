@@ -28,6 +28,7 @@ class ChatContainer extends React.Component {
                     onSearch={this.props.onSearch}
                     starred={this.props.activeFilter.stared}
                     searchString={this.props.activeFilter.search}
+                    sharedLink={this.props.sharedLink}
                 />
                 <div className={styles.channel_title}>{this.props.channelTitle}</div>
                 <MessageList 
@@ -58,6 +59,7 @@ const mapStateToProps = state => {
         activeFilter: state.chats.activeFilter,
         messages: state.chats.messages[state.chats.currentChannel] || null,
         loading: state.chats.loading,
+        sharedLink: window.location.origin + '/' + channel.shared_key,
         hasMessagesToLoad: channel ? (channel.totalMessages > channel.loadedMessages) : false
     }
 }

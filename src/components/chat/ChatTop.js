@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'react-fa';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import styles from 'styles/chat.module.css';
 
@@ -16,6 +17,17 @@ class StarredFilter extends React.Component {
 }
 
 export default class ChatTop extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            share_link: false
+        }
+    }
+    _toggleShareLink() {
+        this.setState({
+            share_link: !this.state.share_link
+        })
+    }
     _onKeyDown(ev) {
         let input = this.refs.search;
         if (ev.keyCode === 13) {
@@ -30,9 +42,33 @@ export default class ChatTop extends React.Component {
         }
     }
     render() {
-        return (
+        if (this.state.share_link) {
+            return (
+                <div className={styles.chat__topbar_share}>
+                    <Icon className={styles.chat__topbar__link} name="link"/>
+                    <div className={styles.chat__topbar__link_container}>
+                        <input 
+                            className={styles.chat__topbar__link_input}
+                            placeholder="Ссылка"
+                            ref="link"
+                            value={this.props.sharedLink}
+                        />
+                    </div>
+                    <div className={styles.chat__topbar__buttons}>
+                        <CopyToClipboard 
+                            text={this.props.sharedLink}
+                            onCopy={::this._toggleShareLink}
+                        >
+                            <div className={styles.chat__topbar__button}>Скопировать</div>
+                        </CopyToClipboard>
+                        &nbsp;
+                        <div onClick={::this._toggleShareLink} className={styles.chat__topbar__button}>Закрыть</div>
+                    </div>
+                </div>
+            )
+        } else return (
             <div className={styles.chat__topbar}>
-                <Icon className={styles.chat__topbar__link} name="link"/>
+                <Icon onClick={::this._toggleShareLink} className={styles.chat__topbar__link} name="link"/>
                 <StarredFilter starred={this.props.starred} onClick={this.props.onToggleFilterStarred}/>
                 <input 
                     className={styles.chat__topbar__search} 
