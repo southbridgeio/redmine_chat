@@ -12,9 +12,9 @@ module ChatApi
         set_user_name(@chat_user.id) unless @chat_user.name.value.present?
       else
         if request.headers['HTTP_AUTHORIZATION'].present?
-          token                   = request.headers['HTTP_AUTHORIZATION'].match(/Bearer <(.+)>/)[1]
+          token                   = request.headers['HTTP_AUTHORIZATION'].match(/Bearer (.+)/)[1]
           user_id, time_int, salt = Base64.decode64(token).split(':')
-          if salt == 'guest'
+          if salt == 'g'
             @chat_user = ChatUser.new(user_id)
             set_user_name(@chat_user.id) unless @chat_user.name.value.present?
           else

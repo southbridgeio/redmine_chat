@@ -1,3 +1,15 @@
 <div class="single-chat">
-  <%= render 'shared/chat' %>
+  <% if User.current.logged? or @chat_user.name.try(:value).present? %>
+    <%= render 'shared/chat' %>
+  <% else %>
+    <div id="guestNameForm" style="background-color: white;">
+      <h1><%= @issue.subject %></h1>
+      <p>Пожалуйста, укажите своё имя, чтобы войти в чат</p>
+      <%= form_tag chat_path(@issue.id), method: :get do %>
+        <%= text_field_tag :name %>
+        <%= hidden_field_tag :token, @issue.chat_shared_key %>
+        <%= submit_tag %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
