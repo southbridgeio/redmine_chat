@@ -29,7 +29,7 @@
         script.onreadystatechange = null;
         __REDMINE_CHAT__.initChatSingleChannel(container, {
           channelId: <%= @issue.id %>,
-          authToken: <%= @chat_token %>,
+          authToken: "<%= @chat_token %>",
           minimized: <%= !@maximized %>
         })
       }
@@ -38,7 +38,7 @@
     script.onload = function () {
       __REDMINE_CHAT__.initChatSingleChannel(container, {
         channelId: <%= @issue.id %>,
-        authToken: <%= @chat_token %>,
+        authToken: "<%= @chat_token %>",
         minimized: <%= !@maximized %>
       })
     }

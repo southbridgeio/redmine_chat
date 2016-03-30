@@ -23,7 +23,7 @@ class ChatsController < ApplicationController
                                expires: 1.day.from_now }
     end
 
-    @chat_token = cookies[:chat_token]
+    @chat_token = cookies[:chat_token].chomp
     @maximized = true
     # puts "chat_token: #{cookies[:chat_token]}"
 
