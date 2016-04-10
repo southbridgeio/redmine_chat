@@ -22,7 +22,7 @@
       __REDMINE_CHAT__.initChatFull(document.getElementById('ChatApp'));
     }
   }
-  <% else %>
+  <% elsif @issue.present? %>
   if (script.readyState) {  // IE
     script.onreadystatechange = function () {
       if (script.readyState === "loaded" || script.readyState === "complete") {
