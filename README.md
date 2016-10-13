@@ -1,5 +1,8 @@
 # redmine_chat
 
+This plugin is no longer supported.
+
+
 add to Gemfile.local
 
 gem 'puma'
